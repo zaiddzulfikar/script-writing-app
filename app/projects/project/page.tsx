@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import './project-detail.css'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { 
@@ -101,34 +100,6 @@ export default function ProjectDetailPage() {
     
     return () => window.removeEventListener('resize', checkScreenSize)
   }, [])
-
-  // Mobile touch interactions
-  useEffect(() => {
-    if (!isMobile) return
-
-    const handleTouchStart = (e: TouchEvent) => {
-      // Add touch feedback for better mobile UX
-      const target = e.target as HTMLElement
-      if (target.closest('button, [role="button"]')) {
-        target.style.transform = 'scale(0.98)'
-      }
-    }
-
-    const handleTouchEnd = (e: TouchEvent) => {
-      const target = e.target as HTMLElement
-      if (target.closest('button, [role="button"]')) {
-        target.style.transform = 'scale(1)'
-      }
-    }
-
-    document.addEventListener('touchstart', handleTouchStart, { passive: true })
-    document.addEventListener('touchend', handleTouchEnd, { passive: true })
-
-    return () => {
-      document.removeEventListener('touchstart', handleTouchStart)
-      document.removeEventListener('touchend', handleTouchEnd)
-    }
-  }, [isMobile])
 
   useEffect(() => {
     if (projectId && user) {
@@ -590,74 +561,56 @@ export default function ProjectDetailPage() {
   }
 
   return (
-    <div className="project-detail-container">
+    <div className="min-h-screen bg-gray-50">
       {isMobile ? (
         // Mobile Layout
-        <div className="mobile-layout">
+        <div className="flex flex-col h-screen">
           {/* Mobile Header */}
-        <div className="mobile-header">
-          <div className="mobile-header-content">
-            <div className="mobile-header-left">
-              <button
-                onClick={() => router.push('/dashboard')}
-                className="mobile-back-button touch-feedback"
-                title="Kembali ke Dashboard"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </button>
-              <div className="flex-1 min-w-0">
-                <h1 className="mobile-project-title">
+          <div className="bg-white border-b border-gray-200 p-4 sticky top-0 z-20">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2 flex-1 min-w-0">
+                <button
+                  onClick={() => router.push('/dashboard')}
+                  className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg p-2 transition-all duration-200"
+                  title="Kembali ke Dashboard"
+                >
+                  <ArrowLeft className="h-5 w-5" />
+                </button>
+                <h1 className="text-lg font-semibold text-gray-900 truncate">
                   {project.title}
                 </h1>
-                <p className="mobile-episode-count">
-                  {episodes.length}/{project.totalEpisodes} Episode
-                </p>
+              </div>
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={() => setShowMobileSidebar(!showMobileSidebar)}
+                  className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg p-2 transition-all duration-200"
+                  title="Menu"
+                >
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                </button>
+                <button
+                  onClick={() => setDeleteConfirm({type: 'project', id: projectId})}
+                  className="text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg p-2 transition-all duration-200"
+                  title="Hapus Proyek"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </button>
               </div>
             </div>
-            <div className="mobile-header-right">
-              <button
-                onClick={() => setShowMobileSidebar(!showMobileSidebar)}
-                className="mobile-menu-button touch-feedback"
-                title="Menu"
-              >
-                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
-              <button
-                onClick={() => setDeleteConfirm({type: 'project', id: projectId})}
-                className="mobile-delete-button touch-feedback"
-                title="Hapus Proyek"
-              >
-                <Trash2 className="h-4 w-4" />
-              </button>
-            </div>
           </div>
-        </div>
 
           {/* Mobile Sidebar Overlay */}
           {showMobileSidebar && (
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="mobile-sidebar-overlay motion-fade-initial motion-fade-animate motion-fade-exit" 
-              onClick={() => setShowMobileSidebar(false)}
-            >
-              <motion.div 
-                initial={{ x: -320 }}
-                animate={{ x: 0 }}
-                exit={{ x: -320 }}
-                transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                className="mobile-sidebar-content motion-slide-left-initial motion-slide-left-animate motion-slide-left-exit motion-slide-left-transition"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <div className="mobile-sidebar-header">
+            <div className="fixed inset-0 bg-black bg-opacity-50 z-30" onClick={() => setShowMobileSidebar(false)}>
+              <div className="bg-white h-full w-80 max-w-[85vw] shadow-xl" onClick={(e) => e.stopPropagation()}>
+                <div className="p-4 border-b border-gray-200">
                   <div className="flex items-center justify-between mb-4">
-                    <h2 className="mobile-sidebar-title">Menu</h2>
+                    <h2 className="text-lg font-semibold text-gray-900">Menu</h2>
                     <button
                       onClick={() => setShowMobileSidebar(false)}
-                      className="mobile-sidebar-close touch-feedback"
+                      className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg p-2 transition-all duration-200"
                     >
                       <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -665,13 +618,13 @@ export default function ProjectDetailPage() {
                     </button>
                   </div>
                   
-                  <div className="text-sm text-gray-600 space-y-4">
-                    <div className="flex flex-wrap gap-3">
-                      <div className="flex items-center space-x-2 bg-white rounded-lg px-3 py-2 border border-gray-200">
+                  <div className="text-sm text-gray-600 space-y-3">
+                    <div className="flex flex-wrap gap-4">
+                      <div className="flex items-center space-x-1">
                         <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Genre</span>
                         <span className="text-sm font-medium text-gray-700">{project.genre}</span>
                       </div>
-                      <div className="flex items-center space-x-2 bg-white rounded-lg px-3 py-2 border border-gray-200">
+                      <div className="flex items-center space-x-1">
                         <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Episode</span>
                         <span className="text-sm font-medium text-gray-700">{episodes.length}/{project.totalEpisodes}</span>
                       </div>
@@ -682,37 +635,37 @@ export default function ProjectDetailPage() {
                       <div className="grid grid-cols-2 gap-2">
                         <button
                           onClick={() => {setShowPDFExtractor(true); setShowMobileSidebar(false)}}
-                          className="mobile-action-button mobile-action-button-blue"
+                          className="group flex items-center justify-center space-x-1.5 text-xs font-medium text-gray-700 hover:text-blue-700 bg-white hover:bg-blue-50 border border-gray-200 hover:border-blue-300 rounded-lg px-2.5 py-2 transition-all duration-200 shadow-sm hover:shadow-md"
                         >
-                          <FileText className="h-4 w-4 text-gray-500 group-hover:text-blue-600" />
+                          <FileText className="h-3.5 w-3.5 text-gray-500 group-hover:text-blue-600" />
                           <span className="whitespace-nowrap">Upload Naskah</span>
                         </button>
                         
                         <button
                           onClick={() => {setShowScriptAnalysis(true); setShowMobileSidebar(false)}}
-                          className="mobile-action-button mobile-action-button-purple"
+                          className="group flex items-center justify-center space-x-1.5 text-xs font-medium text-gray-700 hover:text-purple-700 bg-white hover:bg-purple-50 border border-gray-200 hover:border-purple-300 rounded-lg px-2.5 py-2 transition-all duration-200 shadow-sm hover:shadow-md"
                         >
-                          <Sparkles className="h-4 w-4 text-gray-500 group-hover:text-purple-600" />
+                          <Sparkles className="h-3.5 w-3.5 text-gray-500 group-hover:text-purple-600" />
                           <span className="whitespace-nowrap">Analisis Naskah</span>
                         </button>
                         
                         <button
                           onClick={() => {setShowAnalysisHistory(true); setShowMobileSidebar(false)}}
-                          className="mobile-action-button mobile-action-button-green"
+                          className="group flex items-center justify-center space-x-1.5 text-xs font-medium text-gray-700 hover:text-green-700 bg-white hover:bg-green-50 border border-gray-200 hover:border-green-300 rounded-lg px-2.5 py-2 transition-all duration-200 shadow-sm hover:shadow-md"
                         >
-                          <Eye className="h-4 w-4 text-gray-500 group-hover:text-green-600" />
+                          <Eye className="h-3.5 w-3.5 text-gray-500 group-hover:text-green-600" />
                           <span className="whitespace-nowrap">Lihat Analisis</span>
                         </button>
                         
                         <button
                           onClick={() => setShowMobileProjectInfo(!showMobileProjectInfo)}
-                          className="group flex items-center justify-center space-x-1 text-xs font-medium text-gray-700 hover:text-gray-900 bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 rounded-xl px-3 py-3 transition-all duration-200 shadow-sm hover:shadow-md touch-manipulation"
+                          className="group flex items-center justify-center space-x-1 text-xs font-medium text-gray-700 hover:text-gray-900 bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 rounded-lg px-2.5 py-2 transition-all duration-200 shadow-sm hover:shadow-md"
                         >
                           <span className="whitespace-nowrap">{showMobileProjectInfo ? 'Sembunyikan Detail' : 'Tampilkan Detail'}</span>
                           {showMobileProjectInfo ? (
-                            <ChevronUp className="h-4 w-4 text-gray-500 group-hover:text-gray-700" />
+                            <ChevronUp className="h-3.5 w-3.5 text-gray-500 group-hover:text-gray-700" />
                           ) : (
-                            <ChevronDown className="h-4 w-4 text-gray-500 group-hover:text-gray-700" />
+                            <ChevronDown className="h-3.5 w-3.5 text-gray-500 group-hover:text-gray-700" />
                           )}
                         </button>
                       </div>
@@ -725,18 +678,18 @@ export default function ProjectDetailPage() {
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="mt-2 space-y-3 max-h-96 overflow-y-auto pr-2 motion-expand-initial motion-expand-animate motion-expand-exit motion-expand-transition"
+                        className="mt-2 space-y-2 max-h-96 overflow-y-auto pr-2"
                       >
-                        <div className="mobile-project-info">
+                        <div className="space-y-3">
                           <div>
-                            <p className="mobile-project-info-title">Tone</p>
-                            <p className="mobile-project-info-tone">{project.tone}</p>
+                            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Tone</p>
+                            <p className="text-sm font-medium text-gray-700 leading-relaxed">{project.tone}</p>
                           </div>
                         </div>
                         
                         {project.synopsis && (
-                          <div className="mobile-project-info">
-                            <h4 className="mobile-project-info-title">Sinopsis</h4>
+                          <div className="space-y-2">
+                            <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Sinopsis</h4>
                             <p className="text-sm text-gray-600 leading-relaxed">{project.synopsis}</p>
                           </div>
                         )}
@@ -746,79 +699,55 @@ export default function ProjectDetailPage() {
                 </div>
 
                 {/* Episodes List */}
-                <div className="mobile-episodes-list">
+                <div className="flex-1 overflow-y-auto">
                   <div className="p-4">
                     <div className="flex items-center justify-between mb-4">
-                      <h2 className="mobile-episodes-title">Episode</h2>
+                      <h2 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">Episode</h2>
                       <button
                         onClick={() => {setShowCreateEpisode(true); setShowMobileSidebar(false)}}
-                        className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-xl p-2.5 transition-all duration-200 touch-manipulation"
+                        className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg p-2 transition-all duration-200"
                         title="Tambah Episode"
                       >
                         <Plus className="h-4 w-4" />
                       </button>
                     </div>
                     
-                    <div className="space-y-2">
-                      {episodes.length === 0 ? (
-                        <div className="mobile-empty-state">
-                          <MessageSquare className="mobile-empty-icon" />
-                          <p className="mobile-empty-title">Belum ada episode</p>
-                          <button
-                            onClick={() => {setShowCreateEpisode(true); setShowMobileSidebar(false)}}
-                            className="mobile-create-episode touch-feedback"
-                          >
-                            Buat Episode Pertama
-                          </button>
-                        </div>
-                      ) : (
-                        episodes.map((episode) => (
-                          <motion.div
-                            key={episode.id}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.2 }}
-                            className={`mobile-episode-item motion-slide-initial motion-slide-animate motion-slide-transition touch-feedback ${
-                              selectedEpisode?.id === episode.id 
-                                ? 'mobile-episode-item-selected' 
-                                : 'mobile-episode-item-unselected'
-                            }`}
+                    <div className="space-y-1">
+                      {episodes.map((episode) => (
+                        <div
+                          key={episode.id}
+                          className={`sidebar-item ${
+                            selectedEpisode?.id === episode.id ? 'active' : ''
+                          }`}
+                        >
+                          <div 
+                            className="flex-1 min-w-0 cursor-pointer"
                             onClick={() => {
                               handleEpisodeSelect(episode)
                               setShowMobileSidebar(false)
                             }}
                           >
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center space-x-2 mb-1">
-                                <span className="mobile-episode-number">
-                                  Episode {episode.episodeNumber}
-                                </span>
-                                {selectedEpisode?.id === episode.id && (
-                                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                                )}
-                              </div>
-                              <p className="mobile-episode-title">
-                                {episode.title}
-                              </p>
-                              {episode.setting && (
-                                <p className="text-xs text-gray-500 truncate mt-0.5">
-                                  {episode.setting}
-                                </p>
-                              )}
-                            </div>
+                            <p className="text-sm font-semibold text-gray-800 truncate">
+                              Episode {episode.episodeNumber}
+                            </p>
+                            <p className="text-xs text-gray-500 truncate mt-0.5">
+                              {episode.title}
+                            </p>
+                          </div>
+                          <div className="flex items-center space-x-2">
                             <button
                               onClick={(e) => {
                                 e.stopPropagation()
                                 setDeleteConfirm({type: 'episode', id: episode.id})
                               }}
-                              className="mobile-episode-delete touch-feedback"
+                              className="text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg p-1 transition-all duration-200"
                               title="Hapus Episode"
                             >
-                              <Trash2 className="h-3.5 w-3.5" />
+                              <Trash2 className="h-3 w-3" />
                             </button>
-                          </motion.div>
-                        ))
-                      )}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -830,19 +759,19 @@ export default function ProjectDetailPage() {
                     <p>Diupdate: {project.updatedAt.toLocaleDateString('id-ID')}</p>
                   </div>
                 </div>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
           )}
 
           {/* Mobile Main Content */}
-          <div className="main-content">
+          <div className="flex-1 flex flex-col">
             {selectedEpisode ? (
               <ChatInterface 
                 project={project}
                 episode={selectedEpisode}
               />
             ) : (
-              <div className="desktop-empty-state">
+              <div className="flex-1 flex items-center justify-center p-4">
                 <div className="text-center">
                   <MessageSquare className="h-16 w-16 text-gray-300 mx-auto mb-4" />
                   <h3 className="text-lg font-medium text-gray-900 mb-2">
@@ -956,7 +885,7 @@ export default function ProjectDetailPage() {
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="mt-2 space-y-2 max-h-96 overflow-y-auto pr-2 motion-expand-initial motion-expand-animate motion-expand-exit motion-expand-transition"
+                    className="mt-2 space-y-2 max-h-96 overflow-y-auto pr-2"
                   >
                     <div className="space-y-3">
                       <div>
@@ -978,13 +907,13 @@ export default function ProjectDetailPage() {
           </div>
 
           {/* Episodes List */}
-          <div className="desktop-episodes-list">
+          <div className="flex-1 overflow-y-auto">
             <div className="p-4">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="desktop-episodes-title">Episode</h2>
+                <h2 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">Episode</h2>
                 <button
                   onClick={() => setShowCreateEpisode(true)}
-                  className="desktop-add-episode-button"
+                  className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg p-2 transition-all duration-200"
                   title="Tambah Episode"
                 >
                   <Plus className="h-4 w-4" />
@@ -995,8 +924,8 @@ export default function ProjectDetailPage() {
                 {episodes.map((episode) => (
                   <div
                     key={episode.id}
-                    className={`desktop-episode-item ${
-                      selectedEpisode?.id === episode.id ? 'desktop-episode-item-selected' : 'desktop-episode-item-unselected'
+                    className={`sidebar-item ${
+                      selectedEpisode?.id === episode.id ? 'active' : ''
                     }`}
                   >
                     <div 
@@ -1059,14 +988,14 @@ export default function ProjectDetailPage() {
         </div>
 
         {/* Main Content */}
-        <div className="main-content">
+        <div className="flex-1 flex flex-col">
           {selectedEpisode ? (
             <ChatInterface 
               project={project}
               episode={selectedEpisode}
             />
           ) : (
-            <div className="desktop-empty-state">
+            <div className="flex-1 flex items-center justify-center">
               <div className="text-center">
                 <MessageSquare className="h-16 w-16 text-gray-300 mx-auto mb-4" />
                 <h3 className="text-lg font-medium text-gray-900 mb-2">
@@ -1102,7 +1031,7 @@ export default function ProjectDetailPage() {
       {/* Delete Confirmation Modal */}
       {deleteConfirm.type && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]"
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setDeleteConfirm({type: null, id: null})
@@ -1113,7 +1042,7 @@ export default function ProjectDetailPage() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="bg-white rounded-lg p-6 max-w-md w-full mx-4 shadow-xl motion-scale-initial motion-scale-animate motion-scale-exit"
+            className="bg-white rounded-lg p-6 max-w-md w-full mx-4 shadow-xl"
           >
             <div className="flex items-center space-x-3 mb-4">
               <div className="flex-shrink-0 w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
@@ -1171,10 +1100,10 @@ export default function ProjectDetailPage() {
 
       {/* PDF Extractor Modal */}
       {showPDFExtractor && project && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <div className="modal-header">
-               <h2 className="modal-title">Ekstraktor PDF - {project.title}</h2>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
+          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-hidden">
+            <div className="flex items-center justify-between p-3 sm:p-6 border-b border-gray-200">
+               <h2 className="text-lg sm:text-xl font-semibold text-gray-900 truncate">Ekstraktor PDF - {project.title}</h2>
               <button
                 onClick={() => setShowPDFExtractor(false)}
                 className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg p-2 transition-all duration-200 flex-shrink-0"
@@ -1184,7 +1113,7 @@ export default function ProjectDetailPage() {
                 </svg>
               </button>
             </div>
-            <div className="modal-body">
+            <div className="p-3 sm:p-6 overflow-y-auto max-h-[calc(95vh-120px)] sm:max-h-[calc(90vh-120px)]">
               <PDFExtractor projectId={project.id} />
             </div>
           </div>
@@ -1193,10 +1122,10 @@ export default function ProjectDetailPage() {
 
       {/* Script Analysis Modal */}
       {showScriptAnalysis && project && (
-        <div className="modal-overlay">
-          <div className="modal-content modal-content-large">
-            <div className="modal-header">
-               <h2 className="modal-title">Analisis Naskah - {project.title}</h2>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
+          <div className="bg-white rounded-lg max-w-6xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-hidden">
+            <div className="flex items-center justify-between p-3 sm:p-6 border-b border-gray-200">
+               <h2 className="text-lg sm:text-xl font-semibold text-gray-900 truncate">Analisis Naskah - {project.title}</h2>
               <button
                 onClick={() => setShowScriptAnalysis(false)}
                 className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg p-2 transition-all duration-200 flex-shrink-0"
@@ -1206,7 +1135,7 @@ export default function ProjectDetailPage() {
                 </svg>
               </button>
             </div>
-            <div className="modal-body">
+            <div className="p-3 sm:p-6 overflow-y-auto max-h-[calc(95vh-120px)] sm:max-h-[calc(90vh-120px)]">
               <ScriptAnalysis 
                 projectId={project.id} 
                 scripts={scripts}
@@ -1219,10 +1148,10 @@ export default function ProjectDetailPage() {
 
       {/* Analysis History Modal */}
       {showAnalysisHistory && project && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <div className="modal-header">
-               <h2 className="modal-title">Hasil Analisis - {project.title}</h2>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
+          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-hidden">
+            <div className="flex items-center justify-between p-3 sm:p-6 border-b border-gray-200">
+               <h2 className="text-lg sm:text-xl font-semibold text-gray-900 truncate">Hasil Analisis - {project.title}</h2>
               <button
                 onClick={() => setShowAnalysisHistory(false)}
                 className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg p-2 transition-all duration-200 flex-shrink-0"
@@ -1232,7 +1161,7 @@ export default function ProjectDetailPage() {
                 </svg>
               </button>
             </div>
-            <div className="modal-body">
+            <div className="p-3 sm:p-6 overflow-y-auto max-h-[calc(95vh-120px)] sm:max-h-[calc(90vh-120px)]">
               <AnalysisHistory 
                 projectId={project.id} 
                 onViewAnalysis={handleViewAnalysis}

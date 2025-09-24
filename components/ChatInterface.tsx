@@ -1269,7 +1269,8 @@ export default function ChatInterface({ project, episode }: ChatInterfaceProps) 
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto px-3 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 py-2 sm:py-3 md:py-4 space-y-3 sm:space-y-4 mobile-scroll">
-        {messages.length === 0 ? (
+        <div className="max-w-4xl mx-auto">
+          {messages.length === 0 ? (
           <div className="flex-1 flex items-center justify-center">
             <div className="text-center">
               <MessageSquare className="h-16 w-16 text-gray-300 mx-auto mb-4" />
@@ -1391,38 +1392,39 @@ export default function ChatInterface({ project, episode }: ChatInterfaceProps) 
               </div>
             </motion.div>
           ))
-        )}
-        
-        {isThinking && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="mb-4"
-          >
-            <ThinkingIndicator step={thinkingStep} />
-          </motion.div>
-        )}
-        
-        {isLoading && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="flex justify-start"
-          >
-            <div className="max-w-2xl mr-4 sm:mr-12">
-              <div className="chat-message ai">
-                <div className="flex items-center space-x-2">
-                  <Loader2 className="h-3 w-3 sm:h-4 sm:w-4 animate-spin text-gray-500" />
-                  <span className="text-xs sm:text-sm text-gray-500">AI sedang mengetik...</span>
+          )}
+          
+          {isThinking && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="mb-4"
+            >
+              <ThinkingIndicator step={thinkingStep} />
+            </motion.div>
+          )}
+          
+          {isLoading && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="flex justify-start"
+            >
+              <div className="max-w-2xl mr-4 sm:mr-12">
+                <div className="chat-message ai">
+                  <div className="flex items-center space-x-2">
+                    <Loader2 className="h-3 w-3 sm:h-4 sm:w-4 animate-spin text-gray-500" />
+                    <span className="text-xs sm:text-sm text-gray-500">AI sedang mengetik...</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        )}
-        
-        <div ref={messagesEndRef} />
+            </motion.div>
+          )}
+          
+          <div ref={messagesEndRef} />
+        </div>
       </div>
 
       {/* Chat Shortcuts */}
