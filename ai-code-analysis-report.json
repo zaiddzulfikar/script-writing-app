@@ -1,0 +1,98 @@
+{
+  "timestamp": "2025-09-11T15:45:17.835Z",
+  "summary": {
+    "totalIssues": 6,
+    "criticalIssues": 1,
+    "highIssues": 2,
+    "mediumIssues": 3,
+    "totalRecommendations": 3,
+    "totalFixes": 3
+  },
+  "issues": [
+    {
+      "type": "race_condition",
+      "file": "app/projects/project/page.tsx",
+      "function": "handleEpisodeCreated",
+      "description": "setEpisodeSelectionLocked(false) causes race condition",
+      "severity": "critical",
+      "line": 314
+    },
+    {
+      "type": "auto_selection_issue",
+      "file": "app/projects/project/page.tsx",
+      "function": "fetchEpisodes",
+      "description": "Auto-selection logic may cause redirect to episode 1",
+      "severity": "high"
+    },
+    {
+      "type": "callback_issue",
+      "file": "components/CreateEpisodeModal.tsx",
+      "function": "onSubmit",
+      "description": "onSuccess callback may trigger race condition",
+      "severity": "high"
+    },
+    {
+      "type": "episode_number_race",
+      "file": "components/CreateEpisodeModal.tsx",
+      "function": "getNextEpisodeNumber",
+      "description": "Episode number calculation may cause race condition",
+      "severity": "medium"
+    },
+    {
+      "type": "chat_snapshot_issue",
+      "file": "components/ChatInterface.tsx",
+      "function": "fetchMessages",
+      "description": "Chat interface onSnapshot may interfere with episode selection",
+      "severity": "medium"
+    },
+    {
+      "type": "episode_update_issue",
+      "file": "components/ChatInterface.tsx",
+      "function": "sendMessage",
+      "description": "Episode status update may trigger onSnapshot",
+      "severity": "medium"
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "critical",
+      "title": "Fix Race Condition in handleEpisodeCreated",
+      "description": "Remove setEpisodeSelectionLocked(false) from handleEpisodeCreated function",
+      "impact": "Prevents redirect to episode 1 after episode creation"
+    },
+    {
+      "priority": "high",
+      "title": "Fix Auto-Selection Logic",
+      "description": "Improve condition 3 logic to prevent unwanted redirects",
+      "impact": "Ensures correct episode selection"
+    },
+    {
+      "priority": "medium",
+      "title": "Improve Episode Creation Callback",
+      "description": "Add validation and error handling to onSuccess callback",
+      "impact": "More robust episode creation process"
+    }
+  ],
+  "fixes": [
+    {
+      "type": "code_fix",
+      "file": "app/projects/project/page.tsx",
+      "function": "handleEpisodeCreated",
+      "description": "Remove setEpisodeSelectionLocked(false) to prevent race condition",
+      "code": "\n  const handleEpisodeCreated = (newEpisodeId: string) => {\n    console.log('=== EPISODE CREATED DEBUG ===')\n    console.log('New episode ID:', newEpisodeId)\n    console.log('Current episodeSelectionLocked:', episodeSelectionLocked)\n    \n    setShowCreateEpisode(false)\n    setPendingNewEpisodeId(newEpisodeId)\n    // CRITICAL FIX: HAPUS setEpisodeSelectionLocked(false) - INI PENYEBAB UTAMA REDIRECT KE EPISODE 1\n    // Episode selection tetap locked untuk mencegah race condition dengan onSnapshot\n    \n    // Update URL to include the new episode ID\n    const url = new URL(window.location.href)\n    url.searchParams.set('episodeId', newEpisodeId)\n    window.history.replaceState({}, '', url.toString())\n    \n    console.log('URL updated with episodeId:', newEpisodeId)\n    console.log('Pending episode set, episodeSelectionLocked remains:', episodeSelectionLocked)\n    console.log('Waiting for onSnapshot to handle episode selection...')\n  }"
+    },
+    {
+      "type": "code_fix",
+      "file": "app/projects/project/page.tsx",
+      "function": "fetchEpisodes",
+      "description": "Improve onSnapshot debouncing and add state validation",
+      "code": "\n  const fetchEpisodes = async () => {\n    try {\n      const q = query(\n        collection(db, 'episodes'),\n        where('projectId', '==', projectId)\n      )\n      \n      const unsubscribe = onSnapshot(q, (querySnapshot) => {\n        // Enhanced debouncing: Prevent rapid successive calls\n        const now = Date.now()\n        const timeSinceLastSnapshot = now - lastSnapshotTimeRef.current\n        if (timeSinceLastSnapshot < 300) { // Increased to 300ms\n          console.log('⏱️ Debouncing onSnapshot call (too soon after last call)')\n          return\n        }\n        lastSnapshotTimeRef.current = now\n        \n        // Add state validation before processing\n        if (episodeSelectionLocked && pendingNewEpisodeId) {\n          console.log('🔒 Episode selection locked with pending episode, skipping auto-selection')\n          return\n        }\n        \n        // ... rest of the logic\n      })\n    } catch (error) {\n      console.error('Error fetching episodes:', error)\n    }\n  }"
+    },
+    {
+      "type": "new_feature",
+      "file": "app/projects/project/page.tsx",
+      "description": "Add episode selection state machine for better control",
+      "code": "\n  // Add episode selection state machine\n  type EpisodeSelectionState = 'idle' | 'loading' | 'selecting' | 'locked' | 'error'\n  const [episodeSelectionState, setEpisodeSelectionState] = useState<EpisodeSelectionState>('idle')\n  \n  // Enhanced episode selection logic\n  const selectEpisodeSafely = async (episodeId: string) => {\n    if (episodeSelectionState === 'selecting' || episodeSelectionState === 'locked') {\n      console.log('🚫 Episode selection in progress, skipping')\n      return\n    }\n    \n    setEpisodeSelectionState('selecting')\n    try {\n      // Safe episode selection logic\n      const episode = episodes.find(ep => ep.id === episodeId)\n      if (episode) {\n        setSelectedEpisode(episode)\n        setEpisodeSelectionState('locked')\n        console.log('✅ Episode selected safely:', episodeId)\n      }\n    } catch (error) {\n      setEpisodeSelectionState('error')\n      console.error('❌ Episode selection failed:', error)\n    }\n  }"
+    }
+  ]
+}

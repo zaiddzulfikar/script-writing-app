@@ -1,0 +1,272 @@
+{
+  "monitoringData": {
+    "episodeCreations": [],
+    "episodeSelections": [],
+    "redirects": [],
+    "consoleLogs": [],
+    "networkRequests": [
+      {
+        "timestamp": 1757605087062,
+        "url": "http://localhost:3000/",
+        "method": "GET",
+        "headers": {
+          "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+          "upgrade-insecure-requests": "1",
+          "sec-fetch-dest": "document",
+          "sec-fetch-mode": "navigate",
+          "sec-fetch-site": "none",
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15",
+          "accept-language": "en-US"
+        }
+      },
+      {
+        "timestamp": 1757605087461,
+        "url": "http://localhost:3000/_next/static/media/e4af272ccee01ff0-s.p.woff2",
+        "method": "GET",
+        "headers": {
+          "origin": "http://localhost:3000",
+          "accept": "*/*",
+          "referer": "http://localhost:3000/",
+          "sec-fetch-dest": "font",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-site": "same-origin",
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15",
+          "accept-language": "en-US"
+        }
+      },
+      {
+        "timestamp": 1757605087461,
+        "url": "http://localhost:3000/_next/static/css/app/layout.css?v=1757605087079",
+        "method": "GET",
+        "headers": {
+          "accept": "text/css,*/*;q=0.1",
+          "referer": "http://localhost:3000/",
+          "sec-fetch-dest": "style",
+          "sec-fetch-mode": "no-cors",
+          "sec-fetch-site": "same-origin",
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15",
+          "accept-language": "en-US"
+        }
+      },
+      {
+        "timestamp": 1757605087462,
+        "url": "http://localhost:3000/_next/static/chunks/webpack.js?v=1757605087079",
+        "method": "GET",
+        "headers": {
+          "accept": "*/*",
+          "referer": "http://localhost:3000/",
+          "sec-fetch-dest": "script",
+          "sec-fetch-mode": "no-cors",
+          "sec-fetch-site": "same-origin",
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15",
+          "accept-language": "en-US"
+        }
+      },
+      {
+        "timestamp": 1757605087462,
+        "url": "http://localhost:3000/_next/static/chunks/main-app.js?v=1757605087079",
+        "method": "GET",
+        "headers": {
+          "accept": "*/*",
+          "referer": "http://localhost:3000/",
+          "sec-fetch-dest": "script",
+          "sec-fetch-mode": "no-cors",
+          "sec-fetch-site": "same-origin",
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15",
+          "accept-language": "en-US"
+        }
+      },
+      {
+        "timestamp": 1757605087462,
+        "url": "http://localhost:3000/_next/static/chunks/app-pages-internals.js",
+        "method": "GET",
+        "headers": {
+          "accept": "*/*",
+          "referer": "http://localhost:3000/",
+          "sec-fetch-dest": "script",
+          "sec-fetch-mode": "no-cors",
+          "sec-fetch-site": "same-origin",
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15",
+          "accept-language": "en-US"
+        }
+      },
+      {
+        "timestamp": 1757605087462,
+        "url": "http://localhost:3000/_next/static/chunks/app/page.js",
+        "method": "GET",
+        "headers": {
+          "accept": "*/*",
+          "referer": "http://localhost:3000/",
+          "sec-fetch-dest": "script",
+          "sec-fetch-mode": "no-cors",
+          "sec-fetch-site": "same-origin",
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15",
+          "accept-language": "en-US"
+        }
+      },
+      {
+        "timestamp": 1757605087462,
+        "url": "http://localhost:3000/_next/static/chunks/app/layout.js",
+        "method": "GET",
+        "headers": {
+          "accept": "*/*",
+          "referer": "http://localhost:3000/",
+          "sec-fetch-dest": "script",
+          "sec-fetch-mode": "no-cors",
+          "sec-fetch-site": "same-origin",
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15",
+          "accept-language": "en-US"
+        }
+      },
+      {
+        "timestamp": 1757605087750,
+        "url": "https://firebase.googleapis.com/v1alpha/projects/-/apps/1:532934715727:web:3d03ef178ac6a4051afd3a/webConfig",
+        "method": "GET",
+        "headers": {
+          "accept": "application/json",
+          "origin": "http://localhost:3000",
+          "referer": "http://localhost:3000/",
+          "sec-fetch-dest": "empty",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-site": "cross-site",
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15",
+          "accept-language": "en-US",
+          "x-goog-api-key": "AIzaSyB79O8FP5SiVzt8m9lvwSYPjP_-J0Bwxnk"
+        }
+      },
+      {
+        "timestamp": 1757605087780,
+        "url": "https://firebaseinstallations.googleapis.com/v1/projects/emtek-script-generation/installations",
+        "method": "POST",
+        "headers": {
+          "accept": "application/json",
+          "content-type": "application/json",
+          "origin": "http://localhost:3000",
+          "referer": "http://localhost:3000/",
+          "sec-fetch-dest": "empty",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-site": "cross-site",
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15",
+          "accept-language": "en-US",
+          "x-firebase-client": "eyJ2ZXJzaW9uIjoyLCJoZWFydGJlYXRzIjpbeyJhZ2VudCI6ImZpcmUtY29yZS8wLjE0LjIgZmlyZS1jb3JlLWVzbTIwMjAvMC4xNC4yIGZpcmUtanMvIGZpcmUtYXV0aC8xLjExLjAgZmlyZS1hdXRoLWVzbTIwMjAvMS4xMS4wIGZpcmUtZnN0LzQuOS4xIGZpcmUtZnN0LWVzbTIwMjAvNC45LjEgZmlyZS1qcy1hbGwtYXBwLzEyLjIuMSBmaXJlLWdjcy8wLjE0LjAgZmlyZS1nY3MtZXNtMjAyMC8wLjE0LjAgZmlyZS1paWQvMC42LjE5IGZpcmUtaWlkLWVzbTIwMjAvMC42LjE5IGZpcmUtYW5hbHl0aWNzLzAuMTAuMTggZmlyZS1hbmFseXRpY3MtZXNtMjAyMC8wLjEwLjE4IiwiZGF0ZXMiOlsiMjAyNS0wOS0xMSJdfV19",
+          "x-goog-api-key": "AIzaSyB79O8FP5SiVzt8m9lvwSYPjP_-J0Bwxnk"
+        }
+      },
+      {
+        "timestamp": 1757605087781,
+        "url": "https://apis.google.com/js/api.js?onload=__iframefcb182965",
+        "method": "GET",
+        "headers": {
+          "accept": "*/*",
+          "referer": "http://localhost:3000/",
+          "sec-fetch-dest": "script",
+          "sec-fetch-mode": "no-cors",
+          "sec-fetch-site": "cross-site",
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15",
+          "accept-language": "en-US"
+        }
+      },
+      {
+        "timestamp": 1757605087867,
+        "url": "https://www.googletagmanager.com/gtag/js?l=dataLayer&id=G-TQSTVPQX6P",
+        "method": "GET",
+        "headers": {
+          "accept": "*/*",
+          "referer": "http://localhost:3000/",
+          "sec-fetch-dest": "script",
+          "sec-fetch-mode": "no-cors",
+          "sec-fetch-site": "cross-site",
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15",
+          "accept-language": "en-US"
+        }
+      },
+      {
+        "timestamp": 1757605087878,
+        "url": "https://apis.google.com/_/scs/abc-static/_/js/k=gapi.lb.en.PLtFj_-5DjQ.O/m=gapi_iframes/rt=j/sv=1/d=1/ed=1/rs=AHpOoo-J85zQk73PCqZPyWTydWEIq3_4KA/cb=gapi.loaded_0?le=scs",
+        "method": "GET",
+        "headers": {
+          "accept": "*/*",
+          "referer": "http://localhost:3000/",
+          "sec-fetch-dest": "script",
+          "sec-fetch-mode": "no-cors",
+          "sec-fetch-site": "cross-site",
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15",
+          "accept-language": "en-US"
+        }
+      },
+      {
+        "timestamp": 1757605087920,
+        "url": "https://emtek-script-generation.firebaseapp.com/__/auth/iframe?apiKey=AIzaSyB79O8FP5SiVzt8m9lvwSYPjP_-J0Bwxnk&appName=%5BDEFAULT%5D&v=12.2.0&eid=p&usegapi=1&jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.en.PLtFj_-5DjQ.O%2Fd%3D1%2Frs%3DAHpOoo-J85zQk73PCqZPyWTydWEIq3_4KA%2Fm%3D__features__",
+        "method": "GET",
+        "headers": {
+          "referer": "http://localhost:3000/",
+          "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+          "sec-fetch-dest": "iframe",
+          "sec-fetch-mode": "navigate",
+          "sec-fetch-site": "cross-site",
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15",
+          "accept-language": "en-US"
+        }
+      },
+      {
+        "timestamp": 1757605088061,
+        "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-TQSTVPQX6P&gtm=45je5991v9229498243za200zd9229498243&_p=1757605087867&gcd=13l3l3l3l1l1&npa=0&dma=0&_fid=eg9sbvj8M04tR_ucJcRHg0&cid=1835662827.1757605088&ul=en-us&sr=1280x720&frm=0&pscdl=noapi&_s=1&tag_exp=101509157~103116026~103200004~103233427~104527907~104528501~104684208~104684211~104948813~105367987~105367989~105426769~105426771&sid=1757605088&sct=1&seg=0&dl=http%3A%2F%2Flocalhost%2F&dt=Emtek%20Script%20Generation%20-%20AI-Powered%20Script%20Writing&en=page_view&_fv=1&_nsi=1&_ss=1&_ee=1&ep.origin=firebase&tfd=1006",
+        "method": "POST",
+        "headers": {
+          "referer": "http://localhost:3000/",
+          "accept": "*/*",
+          "origin": "http://localhost:3000",
+          "sec-fetch-dest": "empty",
+          "sec-fetch-mode": "no-cors",
+          "sec-fetch-site": "cross-site",
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15",
+          "pragma": "no-cache",
+          "cache-control": "no-cache",
+          "accept-language": "en-US"
+        }
+      },
+      {
+        "timestamp": 1757605088348,
+        "url": "https://emtek-script-generation.firebaseapp.com/__/auth/iframe.js",
+        "method": "GET",
+        "headers": {
+          "accept": "*/*",
+          "referer": "https://emtek-script-generation.firebaseapp.com/__/auth/iframe?apiKey=AIzaSyB79O8FP5SiVzt8m9lvwSYPjP_-J0Bwxnk&appName=%5BDEFAULT%5D&v=12.2.0&eid=p&usegapi=1&jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.en.PLtFj_-5DjQ.O%2Fd%3D1%2Frs%3DAHpOoo-J85zQk73PCqZPyWTydWEIq3_4KA%2Fm%3D__features__",
+          "sec-fetch-dest": "script",
+          "sec-fetch-mode": "no-cors",
+          "sec-fetch-site": "same-origin",
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15",
+          "accept-language": "en-US"
+        }
+      },
+      {
+        "timestamp": 1757605089129,
+        "url": "https://www.googleapis.com/identitytoolkit/v3/relyingparty/getProjectConfig?key=AIzaSyB79O8FP5SiVzt8m9lvwSYPjP_-J0Bwxnk&cb=1757605089127",
+        "method": "GET",
+        "headers": {
+          "content-type": "application/json",
+          "origin": "https://emtek-script-generation.firebaseapp.com",
+          "accept": "*/*",
+          "referer": "https://emtek-script-generation.firebaseapp.com/",
+          "sec-fetch-dest": "empty",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-site": "cross-site",
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15",
+          "accept-language": "en-US",
+          "x-client-version": "Safari/Iframe/2.20.6/FirebaseCore-web"
+        }
+      }
+    ]
+  },
+  "report": {
+    "summary": {
+      "totalEpisodeCreations": 0,
+      "totalEpisodeSelections": 0,
+      "totalRedirects": 0,
+      "totalConsoleLogs": 0,
+      "totalNetworkRequests": 17
+    },
+    "issues": [],
+    "recommendations": []
+  }
+}

@@ -1,0 +1,73 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow all access for testing - REMOVE IN PRODUCTION
+    match /{document=**} {
+      allow read, write: if true;
+    }
+    // Users can read and write their own user document
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Users can read and write their own projects
+    match /projects/{projectId} {
+      allow read, write: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+    }
+    
+    // Users can read and write their own episodes
+    match /episodes/{episodeId} {
+      allow read, write: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+    }
+    
+    // Users can read and write their own chat messages
+    match /chatMessages/{messageId} {
+      allow read, write: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+    }
+    
+    
+    // Users can read and write their own script versions
+    match /scriptVersions/{versionId} {
+      allow read, write: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+    }
+    
+    // Users can read and write their own script uploads
+    match /scriptUploads/{uploadId} {
+      allow read, write: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null && 
+        request.resource.data.userId == request.auth.uid &&
+        request.resource.data.projectId is string;
+    }
+    
+    // Users can read and write their own scripts (PDF Extractor)
+    match /scripts/{scriptId} {
+      allow read, write: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null && 
+        request.resource.data.userId == request.auth.uid &&
+        request.resource.data.projectId is string;
+    }
+    
+    // Users can read and write their own Style DNA
+    match /styleDNA/{styleDNAId} {
+      allow read, write: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null && 
+        request.resource.data.userId == request.auth.uid &&
+        request.resource.data.projectId is string &&
+        request.resource.data.scriptId is string;
+    }
+    
+    // Users can read and write their own Knowledge Graphs
+    match /knowledgeGraphs/{knowledgeGraphId} {
+      allow read, write: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null && 
+        request.resource.data.userId == request.auth.uid &&
+        request.resource.data.projectId is string &&
+        request.resource.data.scriptId is string;
+    }
+    
+  }
+}
