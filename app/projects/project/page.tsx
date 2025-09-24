@@ -835,14 +835,14 @@ export default function ProjectDetailPage() {
           )}
 
           {/* Mobile Main Content */}
-          <div className="flex-1 flex flex-col">
+          <div className="main-content">
             {selectedEpisode ? (
               <ChatInterface 
                 project={project}
                 episode={selectedEpisode}
               />
             ) : (
-              <div className="flex-1 flex items-center justify-center p-4">
+              <div className="desktop-empty-state">
                 <div className="text-center">
                   <MessageSquare className="h-16 w-16 text-gray-300 mx-auto mb-4" />
                   <h3 className="text-lg font-medium text-gray-900 mb-2">
@@ -978,13 +978,13 @@ export default function ProjectDetailPage() {
           </div>
 
           {/* Episodes List */}
-          <div className="flex-1 overflow-y-auto">
+          <div className="desktop-episodes-list">
             <div className="p-4">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">Episode</h2>
+                <h2 className="desktop-episodes-title">Episode</h2>
                 <button
                   onClick={() => setShowCreateEpisode(true)}
-                  className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg p-2 transition-all duration-200"
+                  className="desktop-add-episode-button"
                   title="Tambah Episode"
                 >
                   <Plus className="h-4 w-4" />
@@ -995,8 +995,8 @@ export default function ProjectDetailPage() {
                 {episodes.map((episode) => (
                   <div
                     key={episode.id}
-                    className={`sidebar-item ${
-                      selectedEpisode?.id === episode.id ? 'active' : ''
+                    className={`desktop-episode-item ${
+                      selectedEpisode?.id === episode.id ? 'desktop-episode-item-selected' : 'desktop-episode-item-unselected'
                     }`}
                   >
                     <div 
@@ -1059,14 +1059,14 @@ export default function ProjectDetailPage() {
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 flex flex-col">
+        <div className="main-content">
           {selectedEpisode ? (
             <ChatInterface 
               project={project}
               episode={selectedEpisode}
             />
           ) : (
-            <div className="flex-1 flex items-center justify-center">
+            <div className="desktop-empty-state">
               <div className="text-center">
                 <MessageSquare className="h-16 w-16 text-gray-300 mx-auto mb-4" />
                 <h3 className="text-lg font-medium text-gray-900 mb-2">
@@ -1171,10 +1171,10 @@ export default function ProjectDetailPage() {
 
       {/* PDF Extractor Modal */}
       {showPDFExtractor && project && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-2 sm:p-4">
-          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-hidden">
-            <div className="flex items-center justify-between p-3 sm:p-6 border-b border-gray-200">
-               <h2 className="text-lg sm:text-xl font-semibold text-gray-900 truncate">Ekstraktor PDF - {project.title}</h2>
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
+               <h2 className="modal-title">Ekstraktor PDF - {project.title}</h2>
               <button
                 onClick={() => setShowPDFExtractor(false)}
                 className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg p-2 transition-all duration-200 flex-shrink-0"
@@ -1184,7 +1184,7 @@ export default function ProjectDetailPage() {
                 </svg>
               </button>
             </div>
-            <div className="p-3 sm:p-6 overflow-y-auto max-h-[calc(95vh-120px)] sm:max-h-[calc(90vh-120px)]">
+            <div className="modal-body">
               <PDFExtractor projectId={project.id} />
             </div>
           </div>
@@ -1193,10 +1193,10 @@ export default function ProjectDetailPage() {
 
       {/* Script Analysis Modal */}
       {showScriptAnalysis && project && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-2 sm:p-4">
-          <div className="bg-white rounded-lg max-w-6xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-hidden">
-            <div className="flex items-center justify-between p-3 sm:p-6 border-b border-gray-200">
-               <h2 className="text-lg sm:text-xl font-semibold text-gray-900 truncate">Analisis Naskah - {project.title}</h2>
+        <div className="modal-overlay">
+          <div className="modal-content modal-content-large">
+            <div className="modal-header">
+               <h2 className="modal-title">Analisis Naskah - {project.title}</h2>
               <button
                 onClick={() => setShowScriptAnalysis(false)}
                 className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg p-2 transition-all duration-200 flex-shrink-0"
@@ -1206,7 +1206,7 @@ export default function ProjectDetailPage() {
                 </svg>
               </button>
             </div>
-            <div className="p-3 sm:p-6 overflow-y-auto max-h-[calc(95vh-120px)] sm:max-h-[calc(90vh-120px)]">
+            <div className="modal-body">
               <ScriptAnalysis 
                 projectId={project.id} 
                 scripts={scripts}
@@ -1219,10 +1219,10 @@ export default function ProjectDetailPage() {
 
       {/* Analysis History Modal */}
       {showAnalysisHistory && project && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-2 sm:p-4">
-          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-hidden">
-            <div className="flex items-center justify-between p-3 sm:p-6 border-b border-gray-200">
-               <h2 className="text-lg sm:text-xl font-semibold text-gray-900 truncate">Hasil Analisis - {project.title}</h2>
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
+               <h2 className="modal-title">Hasil Analisis - {project.title}</h2>
               <button
                 onClick={() => setShowAnalysisHistory(false)}
                 className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg p-2 transition-all duration-200 flex-shrink-0"
@@ -1232,7 +1232,7 @@ export default function ProjectDetailPage() {
                 </svg>
               </button>
             </div>
-            <div className="p-3 sm:p-6 overflow-y-auto max-h-[calc(95vh-120px)] sm:max-h-[calc(90vh-120px)]">
+            <div className="modal-body">
               <AnalysisHistory 
                 projectId={project.id} 
                 onViewAnalysis={handleViewAnalysis}
