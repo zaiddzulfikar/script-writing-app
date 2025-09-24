@@ -590,10 +590,10 @@ export default function ProjectDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="project-detail-container">
       {isMobile ? (
         // Mobile Layout
-        <div className="flex flex-col h-screen">
+        <div className="mobile-layout">
           {/* Mobile Header */}
         <div className="mobile-header">
           <div className="mobile-header-content">
@@ -682,7 +682,7 @@ export default function ProjectDetailPage() {
                       <div className="grid grid-cols-2 gap-2">
                         <button
                           onClick={() => {setShowPDFExtractor(true); setShowMobileSidebar(false)}}
-                          className="group flex items-center justify-center space-x-1.5 text-xs font-medium text-gray-700 hover:text-blue-700 bg-white hover:bg-blue-50 border border-gray-200 hover:border-blue-300 rounded-xl px-3 py-3 transition-all duration-200 shadow-sm hover:shadow-md touch-manipulation"
+                          className="mobile-action-button mobile-action-button-blue"
                         >
                           <FileText className="h-4 w-4 text-gray-500 group-hover:text-blue-600" />
                           <span className="whitespace-nowrap">Upload Naskah</span>
@@ -690,7 +690,7 @@ export default function ProjectDetailPage() {
                         
                         <button
                           onClick={() => {setShowScriptAnalysis(true); setShowMobileSidebar(false)}}
-                          className="group flex items-center justify-center space-x-1.5 text-xs font-medium text-gray-700 hover:text-purple-700 bg-white hover:bg-purple-50 border border-gray-200 hover:border-purple-300 rounded-xl px-3 py-3 transition-all duration-200 shadow-sm hover:shadow-md touch-manipulation"
+                          className="mobile-action-button mobile-action-button-purple"
                         >
                           <Sparkles className="h-4 w-4 text-gray-500 group-hover:text-purple-600" />
                           <span className="whitespace-nowrap">Analisis Naskah</span>
@@ -698,7 +698,7 @@ export default function ProjectDetailPage() {
                         
                         <button
                           onClick={() => {setShowAnalysisHistory(true); setShowMobileSidebar(false)}}
-                          className="group flex items-center justify-center space-x-1.5 text-xs font-medium text-gray-700 hover:text-green-700 bg-white hover:bg-green-50 border border-gray-200 hover:border-green-300 rounded-xl px-3 py-3 transition-all duration-200 shadow-sm hover:shadow-md touch-manipulation"
+                          className="mobile-action-button mobile-action-button-green"
                         >
                           <Eye className="h-4 w-4 text-gray-500 group-hover:text-green-600" />
                           <span className="whitespace-nowrap">Lihat Analisis</span>
