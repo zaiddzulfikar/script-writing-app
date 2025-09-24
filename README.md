@@ -1,176 +1,181 @@
-# Emtek Script Generation
+# Script Writing App
 
-Aplikasi web AI-powered untuk men-generate script film, sinetron, dan original series menggunakan Google Gemini AI.
+AI-powered script writing application with mobile-optimized UI, Firebase integration, and advanced features.
 
-## Features
+## 🚀 Features
 
-- 🔐 **Authentication**: Register/Login dengan Firebase Auth
-- 📁 **Project Management**: Buat dan kelola proyek script
-- 📺 **Episode System**: Setiap proyek memiliki multiple episode
-- 💬 **Chat Interface**: GPT-like UI untuk develop script per episode
-- 🧠 **Context Awareness**: AI memahami konteks antar episode dalam 1 proyek
-- 📝 **Script Generation**: Generate script dalam format yang siap pakai
-- 💾 **Save & Export**: Simpan dan export script
-- 🎨 **Modern UI**: Monokrom hitam-putih yang clean dan modern
+- **AI-Powered Script Generation**: Generate scripts using advanced AI models
+- **Mobile-First Design**: Optimized for mobile devices with responsive UI
+- **Firebase Integration**: Real-time database and authentication
+- **Project Management**: Create and manage multiple script projects
+- **Episode Management**: Organize scripts into episodes with continuity
+- **Style DNA Analysis**: Analyze and maintain consistent writing style
+- **Knowledge Graph**: Build character and plot relationships
+- **PDF Upload**: Extract text from PDF documents
+- **Real-time Chat Interface**: Interactive script development
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 - **Frontend**: Next.js 14, React, TypeScript
-- **Styling**: Tailwind CSS (Monokrom theme)
-- **AI**: Google Gemini API
-- **Backend**: Firebase (Firestore, Auth, Storage)
+- **Styling**: Tailwind CSS, Custom CSS
 - **Animations**: Framer Motion
-- **Forms**: React Hook Form + Zod
+- **Backend**: Firebase Functions, Firestore
+- **Authentication**: Firebase Auth
+- **AI**: Google Gemini API
+- **Deployment**: Firebase Hosting
 
-## Setup Instructions
+## 📱 Mobile Features
 
-1. **Clone repository**
-   ```bash
-   git clone <repository-url>
-   cd emtek-script-generation
-   ```
+- Responsive design for all screen sizes
+- Touch-optimized interface
+- Mobile-specific navigation
+- Carousel mode buttons
+- Touch feedback animations
+- Optimized scrolling and performance
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+## 🎨 UI Components
 
-3. **Setup environment variables**
-   ```bash
-   cp .env.example .env.local
-   ```
-   
-   Edit `.env.local` dengan konfigurasi Firebase dan Gemini API yang sudah disediakan:
-   ```
-   # Firebase Configuration
-   NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyB79O8FP5SiVzt8m9lvwSYPjP_-J0Bwxnk
-   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=emtek-script-generation.firebaseapp.com
-   NEXT_PUBLIC_FIREBASE_PROJECT_ID=emtek-script-generation
-   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=emtek-script-generation.firebasestorage.app
-   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=532934715727
-   NEXT_PUBLIC_FIREBASE_APP_ID=1:532934715727:web:3d03ef178ac6a4051afd3a
-   NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-TQSTVPQX6P
+- **Project Detail Page**: Mobile-optimized with custom CSS classes
+- **Chat Interface**: Real-time messaging with AI
+- **Script Renderer**: Professional script formatting
+- **Modal System**: High z-index modals for proper layering
+- **Analysis Tools**: Style DNA and Knowledge Graph analysis
 
-   # Gemini AI API Key
-   GEMINI_API_KEY=AIzaSyDPHgjW_T7Fgb2GgsvdgmNAUXBH4mqF-k0
-   ```
+## 🚀 Getting Started
 
-4. **Run development server**
-   ```bash
-   npm run dev
-   ```
+### Prerequisites
 
-5. **Open browser**
-   Navigate to `http://localhost:3000`
+- Node.js 18+
+- Firebase CLI
+- Google Cloud account
 
-## Project Structure
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/script-writing-app.git
+cd script-writing-app
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Set up Firebase:
+```bash
+firebase login
+firebase init
+```
+
+4. Configure environment variables:
+```bash
+cp .env.example .env.local
+# Add your Firebase and API keys
+```
+
+5. Run the development server:
+```bash
+npm run dev
+```
+
+### Deployment
+
+1. Build the application:
+```bash
+npm run build:static
+```
+
+2. Deploy to Firebase:
+```bash
+firebase deploy
+```
+
+## 📁 Project Structure
 
 ```
 ├── app/                    # Next.js app directory
+│   ├── api/               # API routes
 │   ├── auth/              # Authentication pages
-│   │   ├── login/
-│   │   └── register/
 │   ├── dashboard/         # Dashboard page
-│   ├── project/[id]/      # Project detail page
-│   ├── globals.css        # Global styles
-│   ├── layout.tsx         # Root layout
-│   └── page.tsx           # Homepage
+│   ├── projects/          # Project pages
+│   └── globals.css        # Global styles
 ├── components/            # React components
-│   ├── ui/               # Reusable UI components
-│   ├── CreateProjectModal.tsx
-│   ├── CreateEpisodeModal.tsx
-│   └── ChatInterface.tsx
-├── contexts/              # React contexts
-│   └── AuthContext.tsx
+│   ├── ui/               # UI components
+│   └── ...               # Feature components
 ├── lib/                   # Utility libraries
-│   ├── firebase.ts        # Firebase configuration
-│   ├── gemini.ts          # Gemini AI integration
-│   └── utils.ts           # Utility functions
-├── types/                 # TypeScript type definitions
-│   └── database.ts
-└── public/               # Static assets
+├── types/                 # TypeScript types
+├── functions/             # Firebase Functions
+└── public/                # Static assets
 ```
 
-## Usage
+## 🎯 Key Features
 
-### 1. Authentication
-- Register akun baru atau login dengan akun yang sudah ada
-- Setelah login, Anda akan diarahkan ke dashboard
-
-### 2. Project Management
-- Klik "Buat Proyek Baru" untuk membuat proyek script
-- Isi detail proyek: judul, genre, jumlah episode, durasi, dll
-- Proyek akan tersimpan di dashboard
-
-### 3. Episode Development
-- Klik proyek untuk membuka detail proyek
-- Buat episode baru dengan klik tombol "+"
-- Pilih episode dari sidebar untuk mulai mengembangkan script
-
-### 4. Chat dengan AI
-- Gunakan chat interface seperti GPT untuk berinteraksi dengan AI
-- AI akan memahami konteks proyek dan episode sebelumnya
-- Minta AI untuk generate script, dialog, atau scene tertentu
-- Script yang di-generate bisa di-copy atau di-download
-
-### 5. Context Awareness
-- AI memahami karakter, setting, dan tone yang sudah ditetapkan di proyek
-- AI mengingat percakapan sebelumnya dalam episode yang sama
-- AI bisa merujuk ke episode sebelumnya dalam proyek yang sama
-
-## API Keys
-
-- **Gemini API**: Sudah dikonfigurasi dengan API key yang diberikan
-- **Firebase**: Sudah dikonfigurasi dengan Firebase config yang diberikan
-
-## Database Structure
-
-```
-Users
-├── Projects
-│   ├── Episodes
-│   │   ├── Chat Messages
-│   │   └── Script Versions
-│   └── Project Metadata
-```
-
-## Features Detail
-
-### Project Management
-- Create project dengan metadata lengkap
-- Genre, tone, target audience
-- Jumlah episode dan durasi per episode
-- Karakter utama dan setting
-- Sinopsis dan catatan tambahan
-
-### Episode System
-- Multiple episode per project
-- Episode numbering otomatis
-- Status tracking (draft, in-progress, completed)
-- Sidebar navigation untuk episode
-
-### Chat Interface
-- GPT-like UI dengan real-time messaging
-- Context-aware AI responses
-- Script generation dengan format yang siap pakai
-- Copy dan download functionality
-- Message history dengan Firebase
+### Mobile Optimization
+- Custom CSS classes for mobile layout
+- Touch-friendly interface
+- Responsive design patterns
+- Performance optimizations
 
 ### AI Integration
-- Google Gemini API integration
-- Context awareness antar episode
-- Project metadata understanding
-- Character consistency
-- Tone dan genre adherence
+- Gemini API for script generation
+- Context-aware responses
+- Style DNA analysis
+- Knowledge graph building
 
-## Contributing
+### Real-time Features
+- Live chat interface
+- Real-time updates
+- Collaborative editing
+- Instant feedback
+
+## 🔧 Development
+
+### CSS Architecture
+- Custom CSS classes in `project-detail.css`
+- Global styles in `globals.css`
+- Mobile-first responsive design
+- Touch feedback animations
+
+### Component Structure
+- Modular React components
+- TypeScript interfaces
+- Custom hooks for state management
+- Error boundaries for stability
+
+## 📱 Mobile Support
+
+The application is fully optimized for mobile devices with:
+- Touch-optimized buttons and inputs
+- Responsive layouts for all screen sizes
+- Mobile-specific navigation patterns
+- Performance optimizations for mobile
+- Touch feedback and animations
+
+## 🚀 Deployment
+
+The application is deployed on Firebase Hosting with:
+- Automatic builds on push
+- CDN distribution
+- SSL certificates
+- Custom domain support
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 🤝 Contributing
 
 1. Fork the repository
-2. Create feature branch
-3. Commit changes
-4. Push to branch
-5. Create Pull Request
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
-## License
+## 📞 Support
 
-MIT License
+For support and questions, please open an issue on GitHub.
+
+---
+
+**Live Demo**: https://emtek-script-generation.web.app
