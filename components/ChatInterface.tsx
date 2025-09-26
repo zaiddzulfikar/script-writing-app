@@ -112,7 +112,8 @@ import {
   onSnapshot,
   getDocs,
   updateDoc,
-  doc
+  doc,
+  getDoc
 } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 
@@ -152,6 +153,21 @@ export default function ChatInterface({ project, episode }: ChatInterfaceProps) 
   const [selectedStyleDNA, setSelectedStyleDNA] = useState<any>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  // Helper function to get script name
+  const getScriptName = async (scriptId: string): Promise<string> => {
+    try {
+      const scriptDoc = await getDoc(doc(db, 'scripts', scriptId))
+      if (scriptDoc.exists()) {
+        const scriptData = scriptDoc.data()
+        return scriptData.fileName || 'Unknown Script'
+      }
+      return 'Unknown Script'
+    } catch (error) {
+      console.error('Error getting script name:', error)
+      return 'Unknown Script'
+    }
+  }
 
   // Load Style DNAs on component mount
   useEffect(() => {
@@ -219,7 +235,11 @@ export default function ChatInterface({ project, episode }: ChatInterfaceProps) 
         ...prev,
         styleDNA: true
       }))
-      toast.success(`Style DNA "${styleDNA.thematicVoice?.thematicVoice || 'Style DNA'}" dipilih!`)
+      // Get script name for toast message
+      const scriptName = styleDNA.scriptId 
+        ? await getScriptName(styleDNA.scriptId) 
+        : styleDNA.thematicVoice?.thematicVoice || 'Style DNA'
+      toast.success(`Style DNA "${scriptName}" dipilih!`)
     } else {
       setActiveModes(prev => ({
         ...prev,
