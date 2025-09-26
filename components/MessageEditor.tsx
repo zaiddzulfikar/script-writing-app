@@ -426,9 +426,10 @@ export default function MessageEditor({
               ...prev,
               styleDNA: true
             }));
-            toast.success(`Style DNA "${styleDNA.thematicVoice?.thematicVoice || 'Style DNA'}" dipilih!`);
+            toast.success(`Style DNA "${styleDNA?.thematicVoice?.thematicVoice || 'Style DNA'}" dipilih!`);
           }}
           loading={isSaving}
+          currentStyleDNA={currentStyleDNA}
         />
       )}
     </>

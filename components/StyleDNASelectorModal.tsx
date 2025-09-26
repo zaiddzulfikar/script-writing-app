@@ -12,18 +12,25 @@ interface StyleDNASelectorModalProps {
   onClose: () => void
   onSelect: (styleDNA: StyleDNA | null) => void
   loading?: boolean
+  currentStyleDNA?: StyleDNA | null
 }
 
 export default function StyleDNASelectorModal({ 
   projectId, 
   onClose, 
   onSelect, 
-  loading = false 
+  loading = false,
+  currentStyleDNA = null
 }: StyleDNASelectorModalProps) {
   const [styleDNAs, setStyleDNAs] = useState<StyleDNA[]>([])
   const [loadingStyleDNAs, setLoadingStyleDNAs] = useState(true)
-  const [selectedStyleDNA, setSelectedStyleDNA] = useState<StyleDNA | null | undefined>(undefined)
+  const [selectedStyleDNA, setSelectedStyleDNA] = useState<StyleDNA | null | undefined>(currentStyleDNA)
   const [scriptNames, setScriptNames] = useState<{[key: string]: string}>({})
+
+  // Update selectedStyleDNA when currentStyleDNA changes
+  useEffect(() => {
+    setSelectedStyleDNA(currentStyleDNA)
+  }, [currentStyleDNA])
 
   // Load Style DNAs for the project
   useEffect(() => {

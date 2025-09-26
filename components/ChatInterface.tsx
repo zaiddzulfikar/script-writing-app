@@ -225,7 +225,7 @@ export default function ChatInterface({ project, episode }: ChatInterfaceProps) 
     }))
   }
 
-  const handleStyleDNASelect = (styleDNA: any) => {
+  const handleStyleDNASelect = async (styleDNA: any) => {
     setSelectedStyleDNA(styleDNA)
     setCurrentStyleDNA(styleDNA)
     setShowStyleDNASelector(false)
@@ -1679,6 +1679,7 @@ export default function ChatInterface({ project, episode }: ChatInterfaceProps) 
           onClose={() => setShowStyleDNASelector(false)}
           onSelect={handleStyleDNASelect}
           loading={isLoading}
+          currentStyleDNA={currentStyleDNA}
         />
       )}
     </div>
