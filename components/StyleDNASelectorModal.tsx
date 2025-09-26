@@ -280,53 +280,16 @@ export default function StyleDNASelectorModal({
           )}
         </div>
 
-        {(styleDNAs.length > 0 || selectedStyleDNA !== undefined) && (
-          <div className="flex justify-between items-center p-6 border-t border-gray-100 flex-shrink-0 bg-gray-50/50">
-            <div className="text-sm text-gray-500">
-              {selectedStyleDNA ? (
-                <span className="flex items-center space-x-2">
-                  <Palette className="h-4 w-4 text-blue-500" />
-                  <span>Style DNA terpilih: <span className="font-medium text-gray-700">
-                    {scriptNames[selectedStyleDNA.scriptId] || selectedStyleDNA.thematicVoice?.thematicVoice || 'Style DNA'}
-                  </span></span>
-                </span>
-              ) : selectedStyleDNA === null ? (
-                <span className="flex items-center space-x-2">
-                  <X className="h-4 w-4 text-gray-500" />
-                  <span>Mode: <span className="font-medium text-gray-700">Tanpa Style DNA</span></span>
-                </span>
-              ) : (
-                <span>Pilih Style DNA untuk melanjutkan</span>
-              )}
-            </div>
-            <div className="flex space-x-3">
-              <button
-                onClick={onClose}
-                className="px-6 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 hover:border-gray-400 transition-all duration-200"
-                disabled={loading}
-              >
-                Batal
-              </button>
-              <button
-                onClick={() => selectedStyleDNA && handleSelect(selectedStyleDNA)}
-                disabled={!selectedStyleDNA || loading}
-                className="px-6 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-xl hover:bg-blue-700 hover:shadow-lg transition-all duration-200 flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loading ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                    <span>Memproses...</span>
-                  </>
-                ) : (
-                  <>
-                    <Palette className="h-4 w-4" />
-                    <span>Gunakan Style DNA</span>
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-        )}
+        {/* Simple close button */}
+        <div className="flex justify-end p-6 border-t border-gray-100 flex-shrink-0">
+          <button
+            onClick={onClose}
+            className="px-6 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 hover:border-gray-400 transition-all duration-200"
+            disabled={loading}
+          >
+            Tutup
+          </button>
+        </div>
       </motion.div>
     </div>
   )
