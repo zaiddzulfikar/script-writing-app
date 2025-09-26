@@ -22,7 +22,7 @@ export default function StyleDNASelectorModal({
 }: StyleDNASelectorModalProps) {
   const [styleDNAs, setStyleDNAs] = useState<StyleDNA[]>([])
   const [loadingStyleDNAs, setLoadingStyleDNAs] = useState(true)
-  const [selectedStyleDNA, setSelectedStyleDNA] = useState<StyleDNA | null>(null)
+  const [selectedStyleDNA, setSelectedStyleDNA] = useState<StyleDNA | null>(undefined)
   const [scriptNames, setScriptNames] = useState<{[key: string]: string}>({})
 
   // Load Style DNAs for the project
@@ -76,6 +76,7 @@ export default function StyleDNASelectorModal({
   }, [projectId])
 
   const handleSelect = (styleDNA: StyleDNA | null) => {
+    console.log('🎨 Style DNA selected:', styleDNA ? styleDNA.id : 'null (no Style DNA)')
     setSelectedStyleDNA(styleDNA)
     onSelect(styleDNA)
   }
@@ -128,7 +129,7 @@ export default function StyleDNASelectorModal({
                 disabled={loading}
                 className={`
                   w-full p-4 rounded-lg border-2 transition-all duration-200 text-left
-                  ${selectedStyleDNA === null 
+                  ${selectedStyleDNA === undefined 
                     ? 'border-gray-500 bg-gray-50' 
                     : 'border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50'
                   }
@@ -141,13 +142,13 @@ export default function StyleDNASelectorModal({
                   <div className="flex-shrink-0">
                     <div className={`
                       p-2 rounded-lg
-                      ${selectedStyleDNA === null 
+                      ${selectedStyleDNA === undefined 
                         ? 'bg-gray-100' 
                         : 'bg-gray-100'
                       }
                     `}>
                       <X className={`h-5 w-5 ${
-                        selectedStyleDNA === null ? 'text-gray-600' : 'text-gray-600'
+                        selectedStyleDNA === undefined ? 'text-gray-600' : 'text-gray-600'
                       }`} />
                     </div>
                   </div>
@@ -155,17 +156,17 @@ export default function StyleDNASelectorModal({
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
                       <h3 className={`font-medium ${
-                        selectedStyleDNA === null ? 'text-gray-900' : 'text-gray-900'
+                        selectedStyleDNA === undefined ? 'text-gray-900' : 'text-gray-900'
                       }`}>
                         Tidak menggunakan Style DNA
                       </h3>
-                      {selectedStyleDNA === null && (
+                      {selectedStyleDNA === undefined && (
                         <Check className="h-5 w-5 text-gray-600" />
                       )}
                     </div>
                     
                     <p className={`text-sm mt-1 ${
-                      selectedStyleDNA === null ? 'text-gray-600' : 'text-gray-600'
+                      selectedStyleDNA === undefined ? 'text-gray-600' : 'text-gray-600'
                     }`}>
                       Chat tanpa Style DNA - menggunakan AI default
                     </p>
@@ -254,7 +255,7 @@ export default function StyleDNASelectorModal({
           )}
         </div>
 
-        {(styleDNAs.length > 0 || selectedStyleDNA !== null) && (
+        {(styleDNAs.length > 0 || selectedStyleDNA !== undefined) && (
           <div className="flex justify-end space-x-3 p-6 border-t border-gray-200 flex-shrink-0">
             <button
               onClick={onClose}
