@@ -26,6 +26,7 @@ export default function StyleDNASelectorModal({
   const [loadingStyleDNAs, setLoadingStyleDNAs] = useState(true)
   const [selectedStyleDNA, setSelectedStyleDNA] = useState<StyleDNA | null | undefined>(currentStyleDNA)
   const [scriptNames, setScriptNames] = useState<{[key: string]: string}>({})
+  const [isMinimized, setIsMinimized] = useState(false)
 
   // Update selectedStyleDNA when currentStyleDNA changes
   useEffect(() => {
@@ -85,7 +86,20 @@ export default function StyleDNASelectorModal({
   const handleSelect = (styleDNA: StyleDNA | null) => {
     console.log('🎨 Style DNA selected:', styleDNA ? styleDNA.id : 'null (no Style DNA)')
     setSelectedStyleDNA(styleDNA)
-    onSelect(styleDNA)
+    
+    // Minimize first, then close after delay
+    setIsMinimized(true)
+    setTimeout(() => {
+      onSelect(styleDNA)
+    }, 200) // 200ms delay for smooth transition
+  }
+
+  const handleClose = () => {
+    // Minimize first, then close after delay
+    setIsMinimized(true)
+    setTimeout(() => {
+      onClose()
+    }, 200) // 200ms delay for smooth transition
   }
 
   const formatDate = (date: Date) => {
@@ -102,9 +116,13 @@ export default function StyleDNASelectorModal({
     <div className="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center p-4 z-[999999]">
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
+        animate={{ 
+          opacity: isMinimized ? 0 : 1, 
+          scale: isMinimized ? 0.9 : 1, 
+          y: isMinimized ? 20 : 0 
+        }}
         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
         className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[85vh] flex flex-col border border-gray-100"
       >
         {/* Header */}
@@ -121,7 +139,7 @@ export default function StyleDNASelectorModal({
             </div>
           </div>
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-all duration-200"
             disabled={loading}
           >
@@ -283,7 +301,7 @@ export default function StyleDNASelectorModal({
         {/* Simple close button */}
         <div className="flex justify-end p-6 border-t border-gray-100 flex-shrink-0">
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="px-6 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 hover:border-gray-400 transition-all duration-200"
             disabled={loading}
           >
