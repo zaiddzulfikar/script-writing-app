@@ -71,6 +71,7 @@ export default function MessageEditor({
     styleDNA: initialModes.styleDNA,
     openMode: initialModes.openMode
   });
+  const [isModalMinimized, setIsModalMinimized] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -79,6 +80,15 @@ export default function MessageEditor({
       textareaRef.current.setSelectionRange(editContent.length, editContent.length);
     }
   }, [isEditing, editContent.length]);
+
+  // Minimize modal when Style DNA selector is open
+  useEffect(() => {
+    if (showStyleDNASelector) {
+      setIsModalMinimized(true);
+    } else {
+      setIsModalMinimized(false);
+    }
+  }, [showStyleDNASelector]);
 
   // Update modes when initialModes change
   useEffect(() => {
@@ -183,16 +193,21 @@ export default function MessageEditor({
         {isEditing && (
           <motion.div
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={{ opacity: isModalMinimized ? 0.3 : 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black bg-opacity-15 flex items-center justify-center z-[99999] p-4 message-editor-modal"
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="fixed inset-0 bg-black bg-opacity-20 flex items-center justify-center z-[99999] p-4 message-editor-modal"
             data-message-editor="true"
             onClick={handleCancel}
           >
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
+              animate={{ 
+                scale: isModalMinimized ? 0.95 : 1, 
+                opacity: isModalMinimized ? 0.3 : 1 
+              }}
               exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
               className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[95vh] sm:max-h-[85vh] overflow-hidden message-editor-content modal-mobile flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
@@ -426,10 +441,9 @@ export default function MessageEditor({
               ...prev,
               styleDNA: true
             }));
-            toast.success(`Style DNA "${styleDNA?.thematicVoice?.thematicVoice || 'Style DNA'}" dipilih!`);
+            toast.success(`Style DNA "${styleDNA.thematicVoice?.thematicVoice || 'Style DNA'}" dipilih!`);
           }}
           loading={isSaving}
-          currentStyleDNA={currentStyleDNA}
         />
       )}
     </>
