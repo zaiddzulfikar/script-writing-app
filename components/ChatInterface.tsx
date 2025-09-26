@@ -1417,6 +1417,13 @@ export default function ChatInterface({ project, episode }: ChatInterfaceProps) 
                        canEdit={message.role === 'user' && !isLoading}
                        isUserMessage={message.role === 'user'}
                        initialModes={activeModes}
+                       // Style DNA props for consistency with prompt box
+                       projectId={project.id}
+                       availableStyleDNAs={availableStyleDNAs}
+                       currentStyleDNA={currentStyleDNA}
+                       onStyleDNASelect={handleStyleDNASelect}
+                       showStyleDNASelector={showStyleDNASelector}
+                       onShowStyleDNASelector={setShowStyleDNASelector}
                      />
 
                    </div>

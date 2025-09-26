@@ -16,6 +16,7 @@ import {
   Globe
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import StyleDNASelectorModal from './StyleDNASelectorModal';
 
 interface MessageEditorProps {
   messageId: string;
@@ -33,6 +34,13 @@ interface MessageEditorProps {
     styleDNA: boolean;
     openMode: boolean;
   };
+  // Add Style DNA props for consistency with prompt box
+  projectId?: string;
+  availableStyleDNAs?: any[];
+  currentStyleDNA?: any;
+  onStyleDNASelect?: (styleDNA: any) => void;
+  showStyleDNASelector?: boolean;
+  onShowStyleDNASelector?: (show: boolean) => void;
 }
 
 export default function MessageEditor({
@@ -45,7 +53,14 @@ export default function MessageEditor({
   onDeleteMessage,
   canEdit,
   isUserMessage,
-  initialModes = { deepThink: false, knowledgeGraph: false, styleDNA: false, openMode: false }
+  initialModes = { deepThink: false, knowledgeGraph: false, styleDNA: false, openMode: false },
+  // Style DNA props
+  projectId = '',
+  availableStyleDNAs = [],
+  currentStyleDNA = null,
+  onStyleDNASelect,
+  showStyleDNASelector = false,
+  onShowStyleDNASelector
 }: MessageEditorProps) {
   const [editContent, setEditContent] = useState(currentContent);
   const [isSaving, setIsSaving] = useState(false);
@@ -74,6 +89,28 @@ export default function MessageEditor({
       openMode: initialModes.openMode
     });
   }, [initialModes]);
+
+  // Style DNA toggle with same logic as prompt box
+  const toggleStyleDNA = () => {
+    if (availableStyleDNAs.length > 1) {
+      // Show Style DNA selector if multiple available
+      if (onShowStyleDNASelector) {
+        onShowStyleDNASelector(true);
+      }
+      return;
+    } else if (availableStyleDNAs.length === 1) {
+      // Use the only available Style DNA
+      if (onStyleDNASelect) {
+        onStyleDNASelect(availableStyleDNAs[0]);
+      }
+    }
+    
+    // Toggle Style DNA mode
+    setModes(prev => ({
+      ...prev,
+      styleDNA: !prev.styleDNA
+    }));
+  };
 
   const handleSave = async () => {
     if (editContent.trim() === currentContent.trim()) {
@@ -234,7 +271,7 @@ export default function MessageEditor({
                     {/* Style DNA */}
                     <button
                       type="button"
-                      onClick={() => setModes(prev => ({ ...prev, styleDNA: !prev.styleDNA }))}
+                      onClick={toggleStyleDNA}
                       className={`flex items-center justify-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 border mobile-touch-target ${
                         modes.styleDNA 
                           ? 'bg-blue-100 text-blue-800 border-blue-300' 
@@ -375,6 +412,25 @@ export default function MessageEditor({
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Style DNA Selector Modal for Edit Message */}
+      {showStyleDNASelector && onShowStyleDNASelector && onStyleDNASelect && projectId && (
+        <StyleDNASelectorModal
+          projectId={projectId}
+          onClose={() => onShowStyleDNASelector(false)}
+          onSelect={(styleDNA) => {
+            onStyleDNASelect(styleDNA);
+            onShowStyleDNASelector(false);
+            // Also update the modes to enable Style DNA
+            setModes(prev => ({
+              ...prev,
+              styleDNA: true
+            }));
+            toast.success(`Style DNA "${styleDNA.thematicVoice?.thematicVoice || 'Style DNA'}" dipilih!`);
+          }}
+          loading={isSaving}
+        />
+      )}
     </>
   );
 }
