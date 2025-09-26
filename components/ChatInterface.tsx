@@ -153,16 +153,53 @@ export default function ChatInterface({ project, episode }: ChatInterfaceProps) 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
+  // Load Style DNAs on component mount
+  useEffect(() => {
+    const loadStyleDNAs = async () => {
+      try {
+        const styleDNAQuery = query(
+          collection(db, 'styleDNA'),
+          where('projectId', '==', project.id),
+          orderBy('createdAt', 'desc')
+        )
+        const styleDNASnapshot = await getDocs(styleDNAQuery)
+        if (!styleDNASnapshot.empty) {
+          const styleDNAs = styleDNASnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+            createdAt: doc.data().createdAt?.toDate() || new Date(),
+            updatedAt: doc.data().updatedAt?.toDate() || new Date()
+          })) as any[]
+          
+          setAvailableStyleDNAs(styleDNAs)
+          console.log('🎨 Loaded Style DNAs:', styleDNAs.length)
+        }
+      } catch (error) {
+        console.error('Error loading Style DNAs:', error)
+      }
+    }
+
+    if (project.id) {
+      loadStyleDNAs()
+    }
+  }, [project.id])
+
   const toggleMode = (mode: 'deepThink' | 'knowledgeGraph' | 'styleDNA' | 'openMode') => {
     if (mode === 'styleDNA') {
+      console.log('🎨 Style DNA toggle clicked, availableStyleDNAs:', availableStyleDNAs.length)
+      
       // Check if user has multiple Style DNAs
       if (availableStyleDNAs.length > 1) {
+        console.log('🎨 Multiple Style DNAs found, showing selector')
         setShowStyleDNASelector(true)
         return
       } else if (availableStyleDNAs.length === 1) {
+        console.log('🎨 Single Style DNA found, using it directly')
         // Use the only available Style DNA
         setSelectedStyleDNA(availableStyleDNAs[0])
         setCurrentStyleDNA(availableStyleDNAs[0])
+      } else {
+        console.log('🎨 No Style DNAs found')
       }
     }
     
