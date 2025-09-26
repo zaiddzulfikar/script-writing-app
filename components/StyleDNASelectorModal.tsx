@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { X, Palette, Calendar, Eye, Check } from 'lucide-react'
-import { collection, query, where, getDocs, orderBy } from 'firebase/firestore'
+import { collection, query, where, getDocs, orderBy, getDoc, doc } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { StyleDNA } from '@/types/style-dna'
 
@@ -23,6 +23,7 @@ export default function StyleDNASelectorModal({
   const [styleDNAs, setStyleDNAs] = useState<StyleDNA[]>([])
   const [loadingStyleDNAs, setLoadingStyleDNAs] = useState(true)
   const [selectedStyleDNA, setSelectedStyleDNA] = useState<StyleDNA | null>(null)
+  const [scriptNames, setScriptNames] = useState<{[key: string]: string}>({})
 
   // Load Style DNAs for the project
   useEffect(() => {
@@ -43,6 +44,24 @@ export default function StyleDNASelectorModal({
           updatedAt: doc.data().updatedAt?.toDate() || new Date()
         })) as StyleDNA[]
         
+        // Load script names for each Style DNA
+        const scriptNamesMap: {[key: string]: string} = {}
+        for (const styleDNA of styleDNAs) {
+          if (styleDNA.scriptId) {
+            try {
+              const scriptDoc = await getDoc(doc(db, 'scripts', styleDNA.scriptId))
+              if (scriptDoc.exists()) {
+                const scriptData = scriptDoc.data()
+                scriptNamesMap[styleDNA.scriptId] = scriptData.fileName || 'Unknown Script'
+              }
+            } catch (error) {
+              console.error('Error loading script name:', error)
+              scriptNamesMap[styleDNA.scriptId] = 'Unknown Script'
+            }
+          }
+        }
+        
+        setScriptNames(scriptNamesMap)
         setStyleDNAs(styleDNAs)
       } catch (error) {
         console.error('Error loading Style DNAs:', error)
@@ -147,7 +166,7 @@ export default function StyleDNASelectorModal({
                         <h3 className={`font-medium ${
                           selectedStyleDNA?.id === styleDNA.id ? 'text-blue-900' : 'text-gray-900'
                         }`}>
-                          {styleDNA.thematicVoice?.thematicVoice || 'Style DNA'}
+                          {scriptNames[styleDNA.scriptId] || styleDNA.thematicVoice?.thematicVoice || 'Style DNA'}
                         </h3>
                         {selectedStyleDNA?.id === styleDNA.id && (
                           <Check className="h-5 w-5 text-blue-600" />
