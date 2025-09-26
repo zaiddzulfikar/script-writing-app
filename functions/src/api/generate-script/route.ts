@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     const project = projectSnap.docs[0]?.data() || {}
 
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-pro",
       generationConfig: {
         temperature: 0.7,
         maxOutputTokens: 32768, // Increased for longer scripts

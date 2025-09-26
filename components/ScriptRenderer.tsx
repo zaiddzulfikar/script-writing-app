@@ -206,17 +206,11 @@ export default function ScriptRenderer({
 
   return (
     <div className="w-full bg-white border border-gray-200 rounded-xl shadow-sm relative">
-      {/* Sticky Header - Cursor Style */}
-      <div className="sticky top-0 z-5 bg-white border-b border-gray-200 rounded-t-xl backdrop-blur-sm">
+      {/* Header - Sticky on desktop, non-sticky on mobile */}
+      <div className="md:sticky md:top-0 z-5 bg-white border-b border-gray-200 rounded-t-xl backdrop-blur-sm">
         <div className="flex items-center justify-between p-4">
           <div className="flex items-center space-x-3">
-            <div className="flex items-center space-x-2">
-              <h3 className="text-lg font-semibold text-gray-900">Script</h3>
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" title="Script Content"></div>
-            </div>
-            <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded-md">
-              {episodeTitle}
-            </span>
+            {/* Removed Script title, green dot, and episode title */}
           </div>
           <div className="flex items-center space-x-2">
             <button

@@ -144,7 +144,7 @@ export async function analyzeEpisodeSynopsis(
 ): Promise<ScriptMetadata> {
   try {
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-pro",
       generationConfig: {
         temperature: 0.7,
         maxOutputTokens: 32768, // Maximum for longer scripts
@@ -270,7 +270,7 @@ export async function analyzeScriptContext(
     
     // Lanjutkan dengan analisis konteks normal untuk generation selanjutnya
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-pro",
       generationConfig: {
         temperature: 0.7,
         maxOutputTokens: 32768, // Increased for longer scripts (80 pages)
@@ -382,7 +382,7 @@ export async function analyzeChunkContent(
 ): Promise<ChunkAnalysis> {
   try {
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-pro",
       generationConfig: {
         temperature: 0.3, // Lower temperature for analysis
         maxOutputTokens: 32768, // Maximum for longer scripts
@@ -482,7 +482,7 @@ export async function generateContextRecap(
 ): Promise<string> {
   try {
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-pro",
       generationConfig: {
         temperature: 0.4,
         maxOutputTokens: 32768, // Maximum for longer scripts
@@ -634,7 +634,7 @@ async function deepThinkAndAnalyze(
 ): Promise<string> {
   try {
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-pro",
       generationConfig: {
         temperature: 0.7,
         maxOutputTokens: 32768, // Increased for longer scripts (80 pages)
@@ -1092,7 +1092,7 @@ export async function generateAdvancedScriptGeneration(
 ): Promise<string> {
   try {
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-pro",
       generationConfig: {
         temperature: 0.7,
         maxOutputTokens: 32768, // Increased for longer scripts (80 pages)
@@ -1363,7 +1363,7 @@ export async function generateScriptResponse(
     }
     
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-pro",
       generationConfig: {
         temperature: 0.7,
         maxOutputTokens: 32768, // Increased for longer scripts (80 pages)
@@ -1908,7 +1908,7 @@ export async function generateLongScriptInChunks(
 ): Promise<string> {
   try {
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-pro",
       generationConfig: {
         temperature: 0.7,
         maxOutputTokens: 32768, // Maximum for longer scripts // Maximum for Gemini 1.5 Pro
@@ -2120,7 +2120,7 @@ export async function generateProjectSuggestion(): Promise<{
 }> {
   try {
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-pro",
       generationConfig: {
         temperature: 0.7,
         maxOutputTokens: 32768, // Increased for longer scripts (80 pages)
@@ -2233,7 +2233,7 @@ export function generateFallbackEpisodeSuggestion(project: Project, episodeNumbe
 async function deepThinkEpisodeSuggestion(project: Project, episodeNumber: number): Promise<string> {
   try {
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-pro",
       generationConfig: {
         temperature: 0.7,
         maxOutputTokens: 32768, // Increased for longer scripts (80 pages)
@@ -2290,7 +2290,7 @@ Analisis ini akan menjadi dasar untuk membuat episode suggestion yang berkualita
 export async function generateEpisodeSuggestion(project: Project, episodeNumber: number) {
   try {
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-pro",
       generationConfig: {
         temperature: 0.7,
         maxOutputTokens: 32768, // Increased for longer scripts (80 pages)
@@ -2373,7 +2373,7 @@ export async function generateEpisodeSuggestionWithMode(
 ) {
   try {
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-pro",
       generationConfig: {
         temperature: 0.7,
         maxOutputTokens: 32768, // Increased for longer scripts (80 pages)
@@ -2548,7 +2548,7 @@ export async function generateGeneralResponse(
     }
     
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-pro",
       generationConfig: {
         temperature: 0.7,
         maxOutputTokens: 32768, // Increased for longer scripts (80 pages)

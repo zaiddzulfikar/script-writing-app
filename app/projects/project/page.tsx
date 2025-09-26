@@ -564,14 +564,14 @@ export default function ProjectDetailPage() {
     <div className="min-h-screen bg-gray-50">
       {isMobile ? (
         // Mobile Layout
-        <div className="flex flex-col h-screen">
+        <div className="flex flex-col h-screen bg-white">
           {/* Mobile Header */}
-          <div className="bg-white border-b border-gray-200 p-4 sticky top-0 z-20">
+          <div className="bg-white border-b border-gray-200 p-4 shadow-sm">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2 flex-1 min-w-0">
                 <button
                   onClick={() => router.push('/dashboard')}
-                  className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg p-2 transition-all duration-200"
+                  className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg p-2 transition-all duration-200 touch-manipulation"
                   title="Kembali ke Dashboard"
                 >
                   <ArrowLeft className="h-5 w-5" />
@@ -583,7 +583,7 @@ export default function ProjectDetailPage() {
               <div className="flex items-center space-x-2">
                 <button
                   onClick={() => setShowMobileSidebar(!showMobileSidebar)}
-                  className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg p-2 transition-all duration-200"
+                  className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg p-2 transition-all duration-200 touch-manipulation"
                   title="Menu"
                 >
                   <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -592,7 +592,7 @@ export default function ProjectDetailPage() {
                 </button>
                 <button
                   onClick={() => setDeleteConfirm({type: 'project', id: projectId})}
-                  className="text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg p-2 transition-all duration-200"
+                  className="text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg p-2 transition-all duration-200 touch-manipulation"
                   title="Hapus Proyek"
                 >
                   <Trash2 className="h-4 w-4" />
@@ -604,13 +604,13 @@ export default function ProjectDetailPage() {
           {/* Mobile Sidebar Overlay */}
           {showMobileSidebar && (
             <div className="fixed inset-0 bg-black bg-opacity-50 z-30" onClick={() => setShowMobileSidebar(false)}>
-              <div className="bg-white h-full w-80 max-w-[85vw] shadow-xl" onClick={(e) => e.stopPropagation()}>
-                <div className="p-4 border-b border-gray-200">
+              <div className="bg-white h-full w-80 max-w-[85vw] shadow-xl flex flex-col" onClick={(e) => e.stopPropagation()}>
+                <div className="p-4 border-b border-gray-200 flex-shrink-0">
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="text-lg font-semibold text-gray-900">Menu</h2>
                     <button
                       onClick={() => setShowMobileSidebar(false)}
-                      className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg p-2 transition-all duration-200"
+                      className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg p-2 transition-all duration-200 touch-manipulation"
                     >
                       <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -699,13 +699,13 @@ export default function ProjectDetailPage() {
                 </div>
 
                 {/* Episodes List */}
-                <div className="flex-1 overflow-y-auto">
+                <div className="flex-1 overflow-y-auto mobile-scroll mobile-sidebar">
                   <div className="p-4">
                     <div className="flex items-center justify-between mb-4">
                       <h2 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">Episode</h2>
                       <button
                         onClick={() => {setShowCreateEpisode(true); setShowMobileSidebar(false)}}
-                        className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg p-2 transition-all duration-200"
+                        className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg p-2 transition-all duration-200 mobile-touch-target"
                         title="Tambah Episode"
                       >
                         <Plus className="h-4 w-4" />
@@ -716,12 +716,12 @@ export default function ProjectDetailPage() {
                       {episodes.map((episode) => (
                         <div
                           key={episode.id}
-                          className={`sidebar-item ${
+                          className={`sidebar-item mobile-touch-target ${
                             selectedEpisode?.id === episode.id ? 'active' : ''
                           }`}
                         >
                           <div 
-                            className="flex-1 min-w-0 cursor-pointer"
+                            className="flex-1 min-w-0 cursor-pointer touch-manipulation"
                             onClick={() => {
                               handleEpisodeSelect(episode)
                               setShowMobileSidebar(false)
@@ -740,7 +740,7 @@ export default function ProjectDetailPage() {
                                 e.stopPropagation()
                                 setDeleteConfirm({type: 'episode', id: episode.id})
                               }}
-                              className="text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg p-1 transition-all duration-200"
+                              className="text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg p-1 transition-all duration-200 mobile-touch-target"
                               title="Hapus Episode"
                             >
                               <Trash2 className="h-3 w-3" />
@@ -764,14 +764,14 @@ export default function ProjectDetailPage() {
           )}
 
           {/* Mobile Main Content */}
-          <div className="flex-1 flex flex-col">
+          <div className="flex-1 flex flex-col min-h-0">
             {selectedEpisode ? (
               <ChatInterface 
                 project={project}
                 episode={selectedEpisode}
               />
             ) : (
-              <div className="flex-1 flex items-center justify-center p-4">
+              <div className="flex-1 flex items-center justify-center p-4 overflow-y-auto mobile-scroll">
                 <div className="text-center">
                   <MessageSquare className="h-16 w-16 text-gray-300 mx-auto mb-4" />
                   <h3 className="text-lg font-medium text-gray-900 mb-2">
@@ -783,7 +783,7 @@ export default function ProjectDetailPage() {
                   {episodes.length === 0 && (
                     <button
                       onClick={() => setShowCreateEpisode(true)}
-                      className="btn-primary"
+                      className="btn-primary touch-manipulation"
                     >
                       Buat Episode Pertama
                     </button>

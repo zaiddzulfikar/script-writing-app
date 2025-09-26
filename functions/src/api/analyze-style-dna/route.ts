@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     console.log(`📄 Text length: ${extractedText.length} characters`);
 
     // Generate Style DNA using Gemini
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-pro" });
     
     const prompt = `Analisis script berikut dan ekstrak Style DNA penulisnya secara komprehensif. Berikan response dalam format JSON dengan struktur berikut:
 

@@ -68,12 +68,12 @@ export default function AiAutoFillOptionsModal({
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-[9999]">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-2 sm:p-4 z-[9999]">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.2 }}
-        className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] flex flex-col"
+        className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[95vh] sm:max-h-[90vh] flex flex-col autofill-modal-content modal-mobile"
       >
         <div className="flex items-center justify-between p-6 border-b border-gray-200 flex-shrink-0">
           <div>
@@ -91,7 +91,7 @@ export default function AiAutoFillOptionsModal({
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-6">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 mobile-scroll">
           <div className="grid gap-4">
             {options.map((option) => {
               const Icon = option.icon
@@ -105,7 +105,7 @@ export default function AiAutoFillOptionsModal({
                   onClick={() => isAvailable && !loading && handleSelectMode(option.id)}
                   disabled={isDisabled}
                   className={`
-                    relative p-4 rounded-lg border-2 transition-all duration-200 text-left
+                    relative p-3 sm:p-4 rounded-lg border-2 transition-all duration-200 text-left mobile-touch-target
                     ${isAvailable 
                       ? option.color 
                       : option.disabledColor

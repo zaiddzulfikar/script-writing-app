@@ -14,7 +14,7 @@ const genAI = new GoogleGenerativeAI(apiKey);
  * Analyzes scripts to extract the 10 key aspects of a writer's Style DNA
  */
 export class StyleDNAAnalyzer {
-  private model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  private model = genAI.getGenerativeModel({ model: "gemini-2.5-pro" });
 
   /**
    * Analyze script and extract comprehensive Style DNA

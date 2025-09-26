@@ -134,7 +134,7 @@ Instruksi:
           throw new Error('Gemini API key not configured. Please set NEXT_PUBLIC_GEMINI_API_KEY in your environment variables.');
         }
         const kgGenAI = new KGGoogleGenerativeAI(kgApiKey);
-        const kgModel = kgGenAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const kgModel = kgGenAI.getGenerativeModel({ model: "gemini-2.5-pro" });
         const kgResult = await kgModel.generateContent(kgPrompt);
         const kgResponse = await kgResult.response;
         const kgResponseText = kgResponse.text();

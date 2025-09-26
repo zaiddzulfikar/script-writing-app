@@ -102,14 +102,14 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
 
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-2 sm:p-4 z-[9999]">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-2 sm:p-4 z-[9999] modal-overlay">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.2 }}
-        className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto"
+        className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto modal-content modal-mobile"
       >
-        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200">
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200 flex-shrink-0">
           <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Buat Proyek Baru</h2>
           <div className="flex items-center space-x-2">
             <button
@@ -135,7 +135,8 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
           </div>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+        <div className="flex-1 overflow-y-auto mobile-scroll">
+          <form onSubmit={handleSubmit(onSubmit)} className="p-4 sm:p-6 space-y-4 sm:space-y-6">
           
 
 
@@ -228,31 +229,32 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
 
 
 
-          {/* Submit Button */}
-          <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
-            <button
-              type="button"
-              onClick={onClose}
-              className="btn-secondary"
-            >
-              Batal
-            </button>
-            <button
-              type="submit"
-              disabled={loading}
-              className="btn-primary flex items-center space-x-2"
-            >
-              {loading ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  <span>Membuat...</span>
-                </>
-              ) : (
-                <span>Buat Proyek</span>
-              )}
-            </button>
-          </div>
-        </form>
+            {/* Submit Button */}
+            <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+              <button
+                type="button"
+                onClick={onClose}
+                className="btn-secondary mobile-touch-target"
+              >
+                Batal
+              </button>
+              <button
+                type="submit"
+                disabled={loading}
+                className="btn-primary flex items-center space-x-2 mobile-touch-target"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span>Membuat...</span>
+                  </>
+                ) : (
+                  <span>Buat Proyek</span>
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
       </motion.div>
     </div>
   )

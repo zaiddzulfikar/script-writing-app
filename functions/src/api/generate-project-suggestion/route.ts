@@ -7,7 +7,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '')
 
 export async function POST(_request: NextRequest) {
   try {
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-pro' })
     const prompt = `Buatkan ide proyek script untuk sinetron/drama Indonesia yang menarik. Berikan response dalam format JSON:
 {
   "title": "Judul proyek yang menarik",

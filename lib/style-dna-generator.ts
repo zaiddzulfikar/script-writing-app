@@ -11,7 +11,7 @@ const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY || '
  * Applies the 10 key aspects of Style DNA to maintain creative consistency
  */
 export class StyleDNAGenerator {
-  private model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  private model = genAI.getGenerativeModel({ model: "gemini-2.5-pro" });
 
   /**
    * Generate script using Style DNA

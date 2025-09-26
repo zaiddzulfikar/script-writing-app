@@ -181,7 +181,7 @@ export async function POST(request: NextRequest) {
     const previousEpisodes = allEpisodes.filter(ep => ep.episodeNumber < episodeNumber);
 
     // Generate episode suggestion using Gemini
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-pro" });
     
     // Extract key elements from synopsis using AI
     const synopsisAnalysisPrompt = `Analisis sinopsis berikut dan ekstrak elemen-elemen kunci:

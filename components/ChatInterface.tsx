@@ -21,6 +21,7 @@ import {
 import ScriptMetadata from './ScriptMetadata'
 import MessageEditor from './MessageEditor'
 import ScriptEditModal from './ScriptEditModal'
+import StyleDNASelectorModal from './StyleDNASelectorModal'
 import toast from 'react-hot-toast'
 import { Project, Episode, ChatMessage } from '@/types/database'
 import type { EditMessageRequest } from '@/types/chat-edit'
@@ -146,14 +147,40 @@ export default function ChatInterface({ project, episode }: ChatInterfaceProps) 
   const [showScriptEditModal, setShowScriptEditModal] = useState(false)
   const [isEditingScript, setIsEditingScript] = useState(false)
   const [currentStyleDNA, setCurrentStyleDNA] = useState<any>(null)
+  const [availableStyleDNAs, setAvailableStyleDNAs] = useState<any[]>([])
+  const [showStyleDNASelector, setShowStyleDNASelector] = useState(false)
+  const [selectedStyleDNA, setSelectedStyleDNA] = useState<any>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const toggleMode = (mode: 'deepThink' | 'knowledgeGraph' | 'styleDNA' | 'openMode') => {
+    if (mode === 'styleDNA') {
+      // Check if user has multiple Style DNAs
+      if (availableStyleDNAs.length > 1) {
+        setShowStyleDNASelector(true)
+        return
+      } else if (availableStyleDNAs.length === 1) {
+        // Use the only available Style DNA
+        setSelectedStyleDNA(availableStyleDNAs[0])
+        setCurrentStyleDNA(availableStyleDNAs[0])
+      }
+    }
+    
     setActiveModes(prev => ({
       ...prev,
       [mode]: !prev[mode]
     }))
+  }
+
+  const handleStyleDNASelect = (styleDNA: any) => {
+    setSelectedStyleDNA(styleDNA)
+    setCurrentStyleDNA(styleDNA)
+    setShowStyleDNASelector(false)
+    setActiveModes(prev => ({
+      ...prev,
+      styleDNA: true
+    }))
+    toast.success(`Style DNA "${styleDNA.thematicVoice?.thematicVoice || 'Style DNA'}" dipilih!`)
   }
 
   // Function to detect if user request is about scriptwriting
@@ -551,7 +578,7 @@ export default function ChatInterface({ project, episode }: ChatInterfaceProps) 
         )
         const styleDNASnapshot = await getDocs(styleDNAQuery)
         if (!styleDNASnapshot.empty) {
-          // Get the most recent Style DNA
+          // Get all Style DNAs
           const styleDNAs = styleDNASnapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data(),
@@ -559,6 +586,11 @@ export default function ChatInterface({ project, episode }: ChatInterfaceProps) 
             updatedAt: doc.data().updatedAt.toDate()
           })) as any[]
           styleDNAs.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+          
+          // Set available Style DNAs for selection
+          setAvailableStyleDNAs(styleDNAs)
+          
+          // Use the most recent Style DNA by default
           styleDNA = styleDNAs[0]
         }
 
@@ -602,7 +634,7 @@ export default function ChatInterface({ project, episode }: ChatInterfaceProps) 
         currentEpisode: episode,
         previousEpisodes,
         recentMessages: allMessages.slice(-50), // Get last 50 messages for comprehensive context
-        styleDNA: styleDNA || undefined,
+        styleDNA: selectedStyleDNA || styleDNA || undefined,
         knowledgeGraph: knowledgeGraph || undefined,
       }
     } catch (error) {
@@ -613,7 +645,7 @@ export default function ChatInterface({ project, episode }: ChatInterfaceProps) 
         currentEpisode: episode,
         previousEpisodes: [],
         recentMessages: messages.slice(-1000), // Increased fallback context for better continuity
-        styleDNA: currentStyleDNA, // Include current Style DNA in fallback
+        styleDNA: selectedStyleDNA || currentStyleDNA, // Include selected or current Style DNA in fallback
         knowledgeGraph: undefined
       }
     }
@@ -1188,7 +1220,7 @@ export default function ChatInterface({ project, episode }: ChatInterfaceProps) 
   return (
     <div className="flex-1 flex flex-col h-full bg-white">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
+      <div className="bg-white border-b border-gray-200 shadow-sm">
         {/* Header Title Bar */}
         <div className="px-3 py-3 sm:px-4 sm:py-4">
           <div className="flex items-center justify-between">
@@ -1301,7 +1333,7 @@ export default function ChatInterface({ project, episode }: ChatInterfaceProps) 
                  <div className={`flex flex-col ${
                    message.role === 'user' ? 'items-end' : 'items-start'
                  }`}>
-                   <div className={`chat-message ${message.role} group w-full`}>
+                   <div className={`chat-message ${message.role} group w-full pb-2`}>
                      {message.role === 'assistant' && message.metadata?.scriptGenerated === true ? (
                        <div className="space-y-4">
                          <ScriptMessage
@@ -1312,7 +1344,7 @@ export default function ChatInterface({ project, episode }: ChatInterfaceProps) 
                            setEditingScriptId={setEditingScriptId}
                            setEditingScriptContent={setEditingScriptContent}
                            setShowScriptEditModal={setShowScriptEditModal}
-                           styleDNA={currentStyleDNA}
+                           styleDNA={selectedStyleDNA || currentStyleDNA}
                          />
                          
                          {/* Action Buttons */}
@@ -1423,26 +1455,24 @@ export default function ChatInterface({ project, episode }: ChatInterfaceProps) 
             </motion.div>
           )}
           
-          <div ref={messagesEndRef} />
-        </div>
-      </div>
-
-      {/* Chat Shortcuts */}
-      <div className="bg-white px-3 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 border-t border-gray-100">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex gap-2 sm:gap-3 overflow-x-auto scrollbar-hide pb-3 pt-2">
-            {getContextualShortcuts().map((shortcut, index) => (
-              <button
-                key={index}
-                onClick={() => handleShortcutClick(shortcut.prompt)}
-                disabled={isLoading}
-                className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-blue-50 border border-blue-300 rounded-xl text-xs sm:text-sm font-medium text-blue-800 hover:bg-blue-100 hover:border-blue-400 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap flex-shrink-0 touch-manipulation"
-              >
-                <span className="text-sm sm:text-base">{shortcut.icon}</span>
-                <span className="truncate">{shortcut.text}</span>
-              </button>
-            ))}
+          {/* Chat Shortcuts - moved inside scrollable area */}
+          <div className="mt-4 mb-4">
+            <div className="flex gap-2 sm:gap-3 overflow-x-auto scrollbar-hide pb-3 pt-2">
+              {getContextualShortcuts().map((shortcut, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleShortcutClick(shortcut.prompt)}
+                  disabled={isLoading}
+                  className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-blue-50 border border-blue-300 rounded-xl text-xs sm:text-sm font-medium text-blue-800 hover:bg-blue-100 hover:border-blue-400 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap flex-shrink-0 touch-manipulation"
+                >
+                  <span className="text-sm sm:text-base">{shortcut.icon}</span>
+                  <span className="truncate">{shortcut.text}</span>
+                </button>
+              ))}
+            </div>
           </div>
+          
+          <div ref={messagesEndRef} />
         </div>
       </div>
 
@@ -1568,6 +1598,16 @@ export default function ChatInterface({ project, episode }: ChatInterfaceProps) 
         }}
         title="Edit Script"
       />
+
+      {/* Style DNA Selector Modal */}
+      {showStyleDNASelector && (
+        <StyleDNASelectorModal
+          projectId={project.id}
+          onClose={() => setShowStyleDNASelector(false)}
+          onSelect={handleStyleDNASelect}
+          loading={isLoading}
+        />
+      )}
     </div>
   )
 }

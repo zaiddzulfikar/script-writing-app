@@ -60,7 +60,7 @@ export class GeminiOCRReader {
       
       // Use Gemini 1.5 Flash with vision capabilities
       const model = genAI.getGenerativeModel({ 
-        model: "gemini-1.5-flash",
+        model: "gemini-2.5-pro",
         generationConfig: {
           temperature: 0.1,
           maxOutputTokens: 8192,

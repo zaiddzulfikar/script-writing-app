@@ -185,12 +185,17 @@ export default function CreateEpisodeModal({ project, onClose, onSuccess }: Crea
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-2 sm:p-4 z-[9999]">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-2 sm:p-4 z-[9998] modal-overlay">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
+        animate={{ 
+          opacity: showAutoFillOptions ? 0 : 1, 
+          scale: showAutoFillOptions ? 0.8 : 1 
+        }}
         transition={{ duration: 0.2 }}
-        className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[95vh] sm:max-h-[90vh] flex flex-col"
+        className={`bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[95vh] sm:max-h-[90vh] flex flex-col modal-content modal-mobile ${
+          showAutoFillOptions ? 'pointer-events-none' : ''
+        }`}
       >
         <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200 flex-shrink-0">
           <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Buat Episode Baru</h2>
@@ -219,7 +224,7 @@ export default function CreateEpisodeModal({ project, onClose, onSuccess }: Crea
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto mobile-scroll">
           <form onSubmit={handleSubmit(onSubmit)} className="p-4 sm:p-6 space-y-4 sm:space-y-6">
             <div className="bg-gray-50 p-4 rounded-lg">
               <p className="text-sm text-gray-600">
@@ -281,7 +286,7 @@ export default function CreateEpisodeModal({ project, onClose, onSuccess }: Crea
           <button
             type="button"
             onClick={onClose}
-            className="btn-secondary"
+            className="btn-secondary mobile-touch-target"
           >
             Batal
           </button>
@@ -289,7 +294,7 @@ export default function CreateEpisodeModal({ project, onClose, onSuccess }: Crea
             type="submit"
             disabled={loading}
             onClick={handleSubmit(onSubmit)}
-            className="btn-primary flex items-center space-x-2"
+            className="btn-primary flex items-center space-x-2 mobile-touch-target"
           >
             {loading ? (
               <>

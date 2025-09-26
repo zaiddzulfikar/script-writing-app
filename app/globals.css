@@ -303,12 +303,22 @@
       min-width: 44px;
     }
     
-    /* Mobile modal improvements */
+  /* Mobile modal improvements */
+  .modal-mobile {
+    margin: 0.5rem;
+    max-height: calc(100vh - 1rem);
+    border-radius: 1rem;
+  }
+  
+  /* Mobile modal full screen on small devices */
+  @media (max-width: 480px) {
     .modal-mobile {
-      margin: 0.5rem;
-      max-height: calc(100vh - 1rem);
-      border-radius: 1rem;
+      margin: 0;
+      border-radius: 0;
+      max-height: 100vh;
+      height: 100vh;
     }
+  }
     
     /* Mobile performance optimizations */
     * {
@@ -340,11 +350,27 @@
       }
     }
     
-    /* Mobile scroll optimizations */
-    .mobile-scroll {
-      -webkit-overflow-scrolling: touch;
-      overscroll-behavior: contain;
-    }
+  /* Mobile scroll optimizations */
+  .mobile-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    /* Ensure proper scrolling */
+    overflow-y: auto;
+    height: 100%;
+  }
+  
+  /* Mobile sidebar improvements */
+  .mobile-sidebar {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+  
+  /* Mobile touch targets */
+  .mobile-touch-target {
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+  }
     
     /* Mobile carousel for mode buttons */
     .mode-buttons-carousel {
@@ -368,10 +394,53 @@
   /* High z-index for modals */
   .modal-overlay {
     z-index: 9999 !important;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
   }
   
   .modal-content {
     z-index: 10000 !important;
+    position: relative;
+  }
+  
+  /* Extra high z-index for autofill modal */
+  .autofill-modal-overlay {
+    z-index: 99999 !important;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+  
+  .autofill-modal-content {
+    z-index: 100000 !important;
+    position: relative;
+  }
+  
+  /* Mobile modal optimizations */
+  @media (max-width: 768px) {
+    .modal-overlay {
+      padding: 0.5rem;
+    }
+    
+    .modal-content {
+      max-width: 100%;
+      width: 100%;
+    }
+    
+    /* Better mobile modal animations */
+    .modal-content {
+      animation: mobileModalSlideIn 0.3s ease-out;
+    }
+    
+    @keyframes mobileModalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
   }
   
   /* Extra high z-index for message editor modal */
@@ -392,5 +461,40 @@
   /* Ensure message editor modal is above everything */
   [data-message-editor="true"] {
     z-index: 99999 !important;
+  }
+  
+  /* Mobile MessageEditor optimizations */
+  @media (max-width: 768px) {
+    .message-editor-modal {
+      padding: 0.5rem;
+    }
+    
+    .message-editor-content {
+      max-height: 95vh;
+      height: 95vh;
+    }
+    
+    /* Better mobile layout for AI mode buttons */
+    .message-editor-content .grid-cols-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    /* Mobile textarea optimization */
+    .message-editor-content textarea {
+      font-size: 16px; /* Prevents zoom on iOS */
+    }
+  }
+  
+  /* Small mobile devices */
+  @media (max-width: 480px) {
+    .message-editor-modal {
+      padding: 0.25rem;
+    }
+    
+    .message-editor-content {
+      max-height: 98vh;
+      height: 98vh;
+      border-radius: 1rem;
+    }
   }
 }

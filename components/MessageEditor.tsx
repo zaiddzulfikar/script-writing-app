@@ -118,11 +118,11 @@ export default function MessageEditor({
     <>
       {/* Edit Button - Below bubble */}
       {!isEditing && (
-        <div className="flex justify-end mt-2 opacity-0 group-hover:opacity-100 transition-all duration-200">
-          <div className="flex items-center space-x-1">
+        <div className="flex justify-end mb-4 opacity-0 group-hover:opacity-100 transition-all duration-200 relative z-10">
+          <div className="flex items-center space-x-2">
             <button
               onClick={onStartEdit}
-              className="p-1.5 bg-white border border-gray-200 text-gray-500 hover:text-gray-700 hover:bg-gray-50 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md"
+              className="p-1.5 bg-white border border-gray-200 text-gray-500 hover:text-gray-700 hover:bg-gray-50 rounded-md shadow-sm transition-all duration-200 hover:shadow-md min-h-[36px] min-w-[36px] flex items-center justify-center"
               title="Edit message"
             >
               <Edit3 className="h-3.5 w-3.5" />
@@ -131,7 +131,7 @@ export default function MessageEditor({
             {isUserMessage && (
               <button
                 onClick={() => setShowDeleteConfirm(true)}
-                className="p-1.5 bg-white border border-gray-200 text-gray-500 hover:text-red-600 hover:bg-red-50 hover:border-red-200 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md"
+                className="p-1.5 bg-white border border-gray-200 text-gray-500 hover:text-red-600 hover:bg-red-50 hover:border-red-200 rounded-md shadow-sm transition-all duration-200 hover:shadow-md min-h-[36px] min-w-[36px] flex items-center justify-center"
                 title="Delete message"
               >
                 <Trash2 className="h-3.5 w-3.5" />
@@ -156,24 +156,24 @@ export default function MessageEditor({
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[85vh] overflow-hidden message-editor-content"
+              className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[95vh] sm:max-h-[85vh] overflow-hidden message-editor-content modal-mobile flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="px-6 py-4 border-b border-gray-100">
+              <div className="px-4 sm:px-6 py-4 border-b border-gray-100 flex-shrink-0">
                 <h3 className="text-lg font-semibold text-gray-900">Edit Message</h3>
                 <p className="text-sm text-gray-500 mt-1">This will regenerate the AI response</p>
               </div>
 
               {/* Content */}
-              <div className="p-6">
+              <div className="flex-1 overflow-y-auto mobile-scroll p-4 sm:p-6">
                 {/* Edit Textarea - GPT Style */}
                 <div className="relative">
                   <textarea
                     ref={textareaRef}
                     value={editContent}
                     onChange={(e) => setEditContent(e.target.value)}
-                    className="w-full min-h-[200px] max-h-[400px] p-4 bg-gray-50 border-0 rounded-xl resize-none focus:ring-0 focus:outline-none text-gray-900 placeholder-gray-500 text-base leading-relaxed"
+                    className="w-full min-h-[150px] sm:min-h-[200px] max-h-[300px] sm:max-h-[400px] p-4 bg-gray-50 border-0 rounded-xl resize-none focus:ring-0 focus:outline-none text-gray-900 placeholder-gray-500 text-base leading-relaxed mobile-text-select"
                     placeholder="Edit your message..."
                     disabled={isSaving}
                     style={{ 
@@ -200,14 +200,14 @@ export default function MessageEditor({
                 </div>
 
                 {/* Mode Selection */}
-                <div className="mt-4 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+                <div className="mt-4 p-3 sm:p-4 bg-gray-50 border border-gray-200 rounded-lg">
                   <h4 className="text-sm font-medium text-gray-900 mb-3">AI Mode untuk Edit:</h4>
-                  <div className="flex flex-wrap gap-3">
+                  <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-3">
                     {/* Deep Think */}
                     <button
                       type="button"
                       onClick={() => setModes(prev => ({ ...prev, deepThink: !prev.deepThink }))}
-                      className={`flex items-center space-x-2 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border ${
+                      className={`flex items-center justify-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 border mobile-touch-target ${
                         modes.deepThink 
                           ? 'bg-blue-100 text-blue-800 border-blue-300' 
                           : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
@@ -221,7 +221,7 @@ export default function MessageEditor({
                     <button
                       type="button"
                       onClick={() => setModes(prev => ({ ...prev, knowledgeGraph: !prev.knowledgeGraph }))}
-                      className={`flex items-center space-x-2 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border ${
+                      className={`flex items-center justify-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 border mobile-touch-target ${
                         modes.knowledgeGraph 
                           ? 'bg-blue-100 text-blue-800 border-blue-300' 
                           : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
@@ -235,7 +235,7 @@ export default function MessageEditor({
                     <button
                       type="button"
                       onClick={() => setModes(prev => ({ ...prev, styleDNA: !prev.styleDNA }))}
-                      className={`flex items-center space-x-2 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border ${
+                      className={`flex items-center justify-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 border mobile-touch-target ${
                         modes.styleDNA 
                           ? 'bg-blue-100 text-blue-800 border-blue-300' 
                           : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
@@ -249,7 +249,7 @@ export default function MessageEditor({
                     <button
                       type="button"
                       onClick={() => setModes(prev => ({ ...prev, openMode: !prev.openMode }))}
-                      className={`flex items-center space-x-2 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border ${
+                      className={`flex items-center justify-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 border mobile-touch-target ${
                         modes.openMode 
                           ? 'bg-green-100 text-green-800 border-green-300' 
                           : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
@@ -266,17 +266,17 @@ export default function MessageEditor({
               </div>
 
               {/* Footer - GPT Style */}
-              <div className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
+              <div className="px-4 sm:px-6 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between flex-shrink-0">
                 <div className="flex items-center space-x-2 text-xs text-gray-500">
                   <Clock className="h-3 w-3" />
                   <span>This action cannot be undone</span>
                 </div>
                 
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2 sm:space-x-3">
                   <button
                     onClick={handleCancel}
                     disabled={isSaving}
-                    className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-white rounded-lg transition-all duration-200 disabled:opacity-50"
+                    className="px-3 sm:px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-white rounded-lg transition-all duration-200 disabled:opacity-50 mobile-touch-target"
                   >
                     Cancel
                   </button>
@@ -284,7 +284,7 @@ export default function MessageEditor({
                   <button
                     onClick={handleSave}
                     disabled={isSaving || editContent.trim() === currentContent.trim()}
-                    className="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-white bg-gray-900 hover:bg-gray-800 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                    className="flex items-center space-x-2 px-3 sm:px-4 py-2 text-sm font-medium text-white bg-gray-900 hover:bg-gray-800 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm mobile-touch-target"
                   >
                     {isSaving ? (
                       <>
