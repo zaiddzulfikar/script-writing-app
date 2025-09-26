@@ -73,6 +73,17 @@ export default function PDFExtractor({ projectId }: PDFExtractorProps) {
           return { ...s, createdAt, updatedAt } as Script;
         })
         .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      
+      console.log('📄 Loaded scripts:', filtered.length);
+      filtered.forEach(script => {
+        console.log('📄 Script:', {
+          id: script.id,
+          fileName: script.fileName,
+          fileSize: script.fileSize,
+          textLength: script.textLength
+        });
+      });
+      
       setScripts(filtered);
     } catch (error) {
       console.error('Error loading scripts:', error);
@@ -458,10 +469,17 @@ export default function PDFExtractor({ projectId }: PDFExtractorProps) {
                     className="flex-1 cursor-pointer"
                     onClick={() => setSelectedScript(script)}
                   >
-                    <h4 className="font-medium text-gray-900">{script.fileName}</h4>
+                    <h4 className="font-medium text-gray-900 text-lg">
+                      {script.fileName || 'Unknown File'}
+                    </h4>
                     <p className="text-sm text-gray-500 mt-1">
                       {script.textLength.toLocaleString()} characters • {formatFileSize(script.fileSize)} • {formatDate(script.createdAt)}
                     </p>
+                    {!script.fileName && (
+                      <p className="text-xs text-red-500 mt-1">
+                        ⚠️ File name not available
+                      </p>
+                    )}
                     {script.meaningfulRatio && (
                       <div className="flex items-center gap-4 mt-2 text-xs">
                         <span className={`px-2 py-1 rounded-full ${
