@@ -10,7 +10,7 @@ import { StyleDNA } from '@/types/style-dna'
 interface StyleDNASelectorModalProps {
   projectId: string
   onClose: () => void
-  onSelect: (styleDNA: StyleDNA) => void
+  onSelect: (styleDNA: StyleDNA | null) => void
   loading?: boolean
 }
 
@@ -75,7 +75,7 @@ export default function StyleDNASelectorModal({
     }
   }, [projectId])
 
-  const handleSelect = (styleDNA: StyleDNA) => {
+  const handleSelect = (styleDNA: StyleDNA | null) => {
     setSelectedStyleDNA(styleDNA)
     onSelect(styleDNA)
   }
@@ -91,7 +91,7 @@ export default function StyleDNASelectorModal({
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-2 sm:p-4 z-[9999]">
+    <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center p-2 sm:p-4 z-[9999]">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -120,16 +120,69 @@ export default function StyleDNASelectorModal({
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
               <span className="ml-3 text-gray-600">Memuat Style DNA...</span>
             </div>
-          ) : styleDNAs.length === 0 ? (
-            <div className="text-center py-12">
-              <Palette className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Belum Ada Style DNA</h3>
-              <p className="text-gray-600">
-                Analisis naskah terlebih dahulu untuk membuat Style DNA
-              </p>
-            </div>
           ) : (
-            <div className="grid gap-4">
+            <div className="space-y-4">
+              {/* No Style DNA Option */}
+              <motion.button
+                onClick={() => handleSelect(null)}
+                disabled={loading}
+                className={`
+                  w-full p-4 rounded-lg border-2 transition-all duration-200 text-left
+                  ${selectedStyleDNA === null 
+                    ? 'border-red-500 bg-red-50 ring-2 ring-red-500 ring-offset-2' 
+                    : 'border-gray-200 bg-white hover:border-red-300 hover:bg-red-50'
+                  }
+                  ${loading ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}
+                `}
+                whileHover={!loading ? { scale: 1.02 } : {}}
+                whileTap={!loading ? { scale: 0.98 } : {}}
+              >
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0">
+                    <div className={`
+                      p-2 rounded-lg
+                      ${selectedStyleDNA === null 
+                        ? 'bg-red-100' 
+                        : 'bg-gray-100'
+                      }
+                    `}>
+                      <X className={`h-5 w-5 ${
+                        selectedStyleDNA === null ? 'text-red-600' : 'text-gray-600'
+                      }`} />
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between">
+                      <h3 className={`font-medium ${
+                        selectedStyleDNA === null ? 'text-red-900' : 'text-gray-900'
+                      }`}>
+                        Tidak menggunakan Style DNA
+                      </h3>
+                      {selectedStyleDNA === null && (
+                        <Check className="h-5 w-5 text-red-600" />
+                      )}
+                    </div>
+                    
+                    <p className={`text-sm mt-1 ${
+                      selectedStyleDNA === null ? 'text-red-700' : 'text-gray-600'
+                    }`}>
+                      Chat tanpa Style DNA - menggunakan AI default
+                    </p>
+                  </div>
+                </div>
+              </motion.button>
+
+              {/* Style DNA Options */}
+              {styleDNAs.length === 0 ? (
+                <div className="text-center py-8">
+                  <Palette className="h-8 w-8 text-gray-400 mx-auto mb-2" />
+                  <p className="text-gray-600 text-sm">
+                    Belum ada Style DNA yang tersedia
+                  </p>
+                </div>
+              ) : (
+                <div className="grid gap-4">
               {styleDNAs.map((styleDNA) => (
                 <motion.button
                   key={styleDNA.id}
@@ -195,11 +248,13 @@ export default function StyleDNASelectorModal({
                   </div>
                 </motion.button>
               ))}
+                </div>
+              )}
             </div>
           )}
         </div>
 
-        {styleDNAs.length > 0 && (
+        {(styleDNAs.length > 0 || selectedStyleDNA !== null) && (
           <div className="flex justify-end space-x-3 p-6 border-t border-gray-200 flex-shrink-0">
             <button
               onClick={onClose}

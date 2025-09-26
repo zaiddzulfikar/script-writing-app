@@ -213,11 +213,20 @@ export default function ChatInterface({ project, episode }: ChatInterfaceProps) 
     setSelectedStyleDNA(styleDNA)
     setCurrentStyleDNA(styleDNA)
     setShowStyleDNASelector(false)
-    setActiveModes(prev => ({
-      ...prev,
-      styleDNA: true
-    }))
-    toast.success(`Style DNA "${styleDNA.thematicVoice?.thematicVoice || 'Style DNA'}" dipilih!`)
+    
+    if (styleDNA) {
+      setActiveModes(prev => ({
+        ...prev,
+        styleDNA: true
+      }))
+      toast.success(`Style DNA "${styleDNA.thematicVoice?.thematicVoice || 'Style DNA'}" dipilih!`)
+    } else {
+      setActiveModes(prev => ({
+        ...prev,
+        styleDNA: false
+      }))
+      toast.success("Chat tanpa Style DNA - menggunakan AI default")
+    }
   }
 
   // Function to detect if user request is about scriptwriting

@@ -185,7 +185,7 @@ export default function MessageEditor({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black bg-opacity-20 flex items-center justify-center z-[99999] p-4 message-editor-modal"
+            className="fixed inset-0 bg-black bg-opacity-15 flex items-center justify-center z-[99999] p-4 message-editor-modal"
             data-message-editor="true"
             onClick={handleCancel}
           >
