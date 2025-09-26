@@ -129,8 +129,8 @@ export default function StyleDNASelectorModal({
                 className={`
                   w-full p-4 rounded-lg border-2 transition-all duration-200 text-left
                   ${selectedStyleDNA === null 
-                    ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-500 ring-offset-2' 
-                    : 'border-gray-200 bg-white hover:border-blue-300 hover:bg-blue-50'
+                    ? 'border-gray-500 bg-gray-50' 
+                    : 'border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50'
                   }
                   ${loading ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}
                 `}
@@ -142,12 +142,12 @@ export default function StyleDNASelectorModal({
                     <div className={`
                       p-2 rounded-lg
                       ${selectedStyleDNA === null 
-                        ? 'bg-blue-100' 
+                        ? 'bg-gray-100' 
                         : 'bg-gray-100'
                       }
                     `}>
                       <X className={`h-5 w-5 ${
-                        selectedStyleDNA === null ? 'text-blue-600' : 'text-gray-600'
+                        selectedStyleDNA === null ? 'text-gray-600' : 'text-gray-600'
                       }`} />
                     </div>
                   </div>
@@ -155,17 +155,17 @@ export default function StyleDNASelectorModal({
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
                       <h3 className={`font-medium ${
-                        selectedStyleDNA === null ? 'text-blue-900' : 'text-gray-900'
+                        selectedStyleDNA === null ? 'text-gray-900' : 'text-gray-900'
                       }`}>
                         Tidak menggunakan Style DNA
                       </h3>
                       {selectedStyleDNA === null && (
-                        <Check className="h-5 w-5 text-blue-600" />
+                        <Check className="h-5 w-5 text-gray-600" />
                       )}
                     </div>
                     
                     <p className={`text-sm mt-1 ${
-                      selectedStyleDNA === null ? 'text-blue-700' : 'text-gray-600'
+                      selectedStyleDNA === null ? 'text-gray-600' : 'text-gray-600'
                     }`}>
                       Chat tanpa Style DNA - menggunakan AI default
                     </p>
